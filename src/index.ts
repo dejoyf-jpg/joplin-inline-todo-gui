@@ -82,18 +82,13 @@ function buildDialogHtml(tokenLabel: string): string {
 			color: var(--joplin-color, #222);
 		}
 		#itg-wrap input[type="date"] { color-scheme: light dark; cursor: pointer; }
-		/* Joplin's dialog webview suppresses the native calendar-picker icon, so
-		   we render our own visible calendar button next to the field. The SVG
-		   uses currentColor, so it's visible in both light and dark themes. */
-		#itg-wrap .date-row { display: flex; gap: 6px; align-items: stretch; }
+		/* Joplin's dialog webview does not render the native date-picker icon
+		   (confirmed: even the Templates plugin shows none) and sanitizes out
+		   <svg>/inline handlers. A plain emoji is just text, so it renders like
+		   the field labels do; the <label for> forwards clicks to open the picker. */
+		#itg-wrap .date-row { display: flex; gap: 8px; align-items: center; }
 		#itg-wrap .date-row input[type="date"] { flex: 1; }
-		#itg-wrap .cal-btn {
-			display: inline-flex; align-items: center; justify-content: center;
-			padding: 0 11px; border: 1px solid var(--joplin-divider-color, #ccc);
-			border-radius: 4px; background: var(--joplin-background-color, #fff);
-			color: var(--joplin-color, #222); cursor: pointer;
-		}
-		#itg-wrap .cal-btn:hover { background: var(--joplin-selected-color, rgba(128,128,128,0.2)); }
+		#itg-wrap .cal-label { font-size: 20px; line-height: 1; cursor: pointer; user-select: none; }
 		#itg-wrap .hint { font-size: 0.85em; opacity: 0.75; }
 		#itg-wrap .row { display: flex; gap: 12px; }
 		#itg-wrap .row .field { flex: 1; }
@@ -109,8 +104,8 @@ function buildDialogHtml(tokenLabel: string): string {
 				<div class="field">
 					<label class="lbl" for="itg-due">Due date <span class="hint">(optional)</span></label>
 					<div class="date-row">
-						<input type="date" id="itg-due" name="due" onclick="try{ this.showPicker(); }catch(e){}" />
-						<button type="button" class="cal-btn" title="Pick a date" onclick="var d=document.getElementById('itg-due'); try{ d.showPicker(); }catch(e){ d.focus(); }"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="3" y1="10" x2="21" y2="10"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="16" y1="2" x2="16" y2="6"></line></svg></button>
+						<input type="date" id="itg-due" name="due" />
+						<label class="cal-label" for="itg-due" title="Open the calendar">📅</label>
 					</div>
 				</div>
 			</div>
