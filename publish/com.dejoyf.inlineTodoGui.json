@@ -21,6 +21,6 @@
 	"screenshots": [],
 	"icons": {},
 	"promo_tile": {},
-	"_publish_hash": "sha256:9040c44c035a6cfe934a710f343944624bfbd42c5be45ca23eb6179e4c89a1af",
-	"_publish_commit": "feature/joplin-inline-todo-gui:e58b818773494fe05b9b3cb412d43754d0a0ecc6"
+	"_publish_hash": "sha256:3a3b109b44d9c56bf448a3af609cd524693f5316a3e7de58bebd82e7e960d099",
+	"_publish_commit": "feature/joplin-inline-todo-gui:a6f3a5df711ee39a47041f6d383afb9a20e75c41"
 }

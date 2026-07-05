@@ -14,10 +14,10 @@ or press **Ctrl/Cmd+Alt+T**. A dialog opens with:
 
 - **Task** text field
 - **Due date** picker (optional calendar input)
-- **Tag checkboxes** built from your default tags (BOB, DealFlow, L10 out of the box)
-- A **More tags** field for one-off tags
+- **Tags** field (optional, space or comma separated, no `+` needed)
 
-On **Insert**, it drops a line like this at your cursor:
+The line is inserted at your cursor **in the note you currently have open**,
+so it stays in that note's notebook. On **Insert**, it drops a line like this:
 
 ```markdown
 - [ ] @TODO Call Scott about Brookfield //2026-07-08 +BOB +DealFlow
@@ -30,7 +30,6 @@ The calebjohn plugin then picks it up under **Tools → Create TODO summary note
 **Tools → Options → Inline TODO Quick Add**:
 
 - **Task keyword** – default `@TODO`.
-- **Default tags (checkboxes)** – comma-separated list shown as checkboxes.
 - **Put due date before tags** – controls whether the line reads
   `@TODO text //date +tags` (on) or `@TODO text +tags //date` (off).
 

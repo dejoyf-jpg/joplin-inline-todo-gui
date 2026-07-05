@@ -40,11 +40,9 @@ function esc(s: string): string {
 
 async function getSettings() {
 	const token = ((await joplin.settings.value(`${SECTION}.token`)) || '@TODO').trim() || '@TODO';
-	const defaultTagsRaw = (await joplin.settings.value(`${SECTION}.defaultTags`)) || '';
 	const dateFirst = await joplin.settings.value(`${SECTION}.dateFirst`);
 	return {
 		token,
-		defaultTags: parseTagList(defaultTagsRaw),
 		dateFirst: dateFirst !== false,
 	};
 }
@@ -71,19 +69,7 @@ function buildTodoLine(opts: {
 	return parts.join(' ');
 }
 
-function buildDialogHtml(defaultTags: string[], tokenLabel: string): string {
-	const tagCheckboxes = defaultTags.length
-		? defaultTags
-				.map(
-					(t) => `
-			<label class="tag">
-				<input type="checkbox" name="tag_${esc(t)}" value="${esc(t)}" />
-				<span>+${esc(t)}</span>
-			</label>`,
-				)
-				.join('')
-		: `<div class="hint">No default tags configured. Add some in Tools &rarr; Options &rarr; Inline TODO Quick Add, or type them below.</div>`;
-
+function buildDialogHtml(tokenLabel: string): string {
 	return `
 	<style>
 		#itg-wrap { font-family: var(--joplin-font-family, sans-serif); min-width: 380px; }
@@ -95,9 +81,6 @@ function buildDialogHtml(defaultTags: string[], tokenLabel: string): string {
 			border-radius: 4px; background: var(--joplin-background-color, #fff);
 			color: var(--joplin-color, #222);
 		}
-		#itg-wrap .tags { display: flex; flex-wrap: wrap; gap: 6px 14px; }
-		#itg-wrap label.tag { display: inline-flex; align-items: center; gap: 5px; font-weight: normal; cursor: pointer; }
-		#itg-wrap label.tag span { font-family: var(--joplin-font-family, monospace); }
 		#itg-wrap .hint { font-size: 0.85em; opacity: 0.75; }
 		#itg-wrap .row { display: flex; gap: 12px; }
 		#itg-wrap .row .field { flex: 1; }
@@ -116,12 +99,8 @@ function buildDialogHtml(defaultTags: string[], tokenLabel: string): string {
 				</div>
 			</div>
 			<div class="field">
-				<label class="lbl">Tags</label>
-				<div class="tags">${tagCheckboxes}</div>
-			</div>
-			<div class="field">
-				<label class="lbl" for="itg-extra">More tags <span class="hint">(space or comma separated, no + needed)</span></label>
-				<input type="text" id="itg-extra" name="extraTags" placeholder="e.g. Q3 followup" />
+				<label class="lbl" for="itg-tags">Tags <span class="hint">(optional, space or comma separated, no + needed)</span></label>
+				<input type="text" id="itg-tags" name="tags" placeholder="e.g. BOB DealFlow" />
 			</div>
 			<div class="hint">Inserts a <code>${esc(tokenLabel)}</code> checkbox line at your cursor.</div>
 		</form>
@@ -149,15 +128,6 @@ joplin.plugins.register({
 				description:
 					'The keyword the Inline TODO plugin scans for. Default @TODO. Change only if you customised the plugin.',
 			},
-			[`${SECTION}.defaultTags`]: {
-				value: 'BOB, DealFlow, L10',
-				type: SettingItemType.String,
-				section: SECTION,
-				public: true,
-				label: 'Default tags (checkboxes)',
-				description:
-					'Comma-separated tags shown as checkboxes in the quick-add form. Example: BOB, DealFlow, L10',
-			},
 			[`${SECTION}.dateFirst`]: {
 				value: true,
 				type: SettingItemType.Bool,
@@ -183,12 +153,9 @@ joplin.plugins.register({
 			label: 'Add Inline TODO…',
 			iconName: 'fas fa-square-check',
 			execute: async () => {
-				const { token, defaultTags, dateFirst } = await getSettings();
+				const { token, dateFirst } = await getSettings();
 
-				await joplin.views.dialogs.setHtml(
-					dialog,
-					buildDialogHtml(defaultTags, token),
-				);
+				await joplin.views.dialogs.setHtml(dialog, buildDialogHtml(token));
 
 				const result = await joplin.views.dialogs.open(dialog);
 				if (!result || result.id !== 'ok') return;
@@ -203,16 +170,8 @@ joplin.plugins.register({
 					return;
 				}
 
-				// Collect checked default-tag checkboxes plus any free-text tags.
-				const checkedTags: string[] = [];
-				for (const key of Object.keys(form)) {
-					if (key.startsWith('tag_') && form[key]) {
-						const t = sanitizeTag(String(form[key]));
-						if (t) checkedTags.push(t);
-					}
-				}
-				const extraTags = parseTagList(form.extraTags || '');
-				const tags = parseTagList([...checkedTags, ...extraTags].join(' '));
+				// Tags are optional, free-text only.
+				const tags = parseTagList(form.tags || '');
 
 				const line = buildTodoLine({
 					token,
