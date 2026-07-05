@@ -151,7 +151,9 @@ joplin.plugins.register({
 		await joplin.commands.register({
 			name: 'inlineTodoGui.add',
 			label: 'Add Inline TODO…',
-			iconName: 'fas fa-square-check',
+			// Font Awesome 5 name (Joplin bundles FA 5.15.4); the FA6 name
+			// "fa-square-check" renders blank on Joplin.
+			iconName: 'fas fa-check-square',
 			execute: async () => {
 				const { token, dateFirst } = await getSettings();
 

@@ -2,9 +2,9 @@
 	"manifest_version": 1,
 	"id": "com.dejoyf.inlineTodoGui",
 	"app_min_version": "3.0.0",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"name": "Inline TODO Quick Add",
-	"description": "GUI quick-add for Inline TODO tasks. A form with a due-date picker and tag checkboxes inserts the correct @TODO markdown line for you, so you never have to remember the syntax. Pairs with the Inline TODO plugin (plugin.calebjohn.todo).",
+	"description": "GUI quick-add for Inline TODO tasks. A form with a due-date picker and optional tags inserts the correct @TODO markdown line for you, so you never have to remember the syntax. Pairs with the Inline TODO plugin (plugin.calebjohn.todo).",
 	"author": "Frank DeJoy",
 	"homepage_url": "https://github.com/dejoyf-jpg/homelab/tree/main/plugins/joplin-inline-todo-gui",
 	"repository_url": "https://github.com/dejoyf-jpg/homelab",
@@ -21,6 +21,6 @@
 	"screenshots": [],
 	"icons": {},
 	"promo_tile": {},
-	"_publish_hash": "sha256:50e9aa3649641355a3f9b69709fd13f999513448d6379fa0fb6778fc3d8fe136",
-	"_publish_commit": "feature/joplin-inline-todo-gui:61693bce6dab7b8f1535ebec24db6f6c20834227"
+	"_publish_hash": "sha256:0c5f92b0b26d604b5eb8b69b8951ca8ef5cde054a5b449fa8ea440a75249807d",
+	"_publish_commit": "main:cdd04e2aa14d1ecb4defc8b7de4d13daf5845b25"
 }
