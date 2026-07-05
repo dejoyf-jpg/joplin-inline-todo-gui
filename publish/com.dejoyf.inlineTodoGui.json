@@ -2,7 +2,7 @@
 	"manifest_version": 1,
 	"id": "com.dejoyf.inlineTodoGui",
 	"app_min_version": "3.0.0",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"name": "Inline TODO Quick Add",
 	"description": "GUI quick-add for Inline TODO tasks. A form with a due-date picker and optional tags inserts the correct @TODO markdown line for you, so you never have to remember the syntax. Pairs with the Inline TODO plugin (plugin.calebjohn.todo).",
 	"author": "Frank DeJoy",
@@ -21,6 +21,6 @@
 	"screenshots": [],
 	"icons": {},
 	"promo_tile": {},
-	"_publish_hash": "sha256:0c5f92b0b26d604b5eb8b69b8951ca8ef5cde054a5b449fa8ea440a75249807d",
-	"_publish_commit": "main:cdd04e2aa14d1ecb4defc8b7de4d13daf5845b25"
+	"_publish_hash": "sha256:56f1dfc2772b04750758f90cec1056ebf36dc0f4fda76b55077a62ea6db3da80",
+	"_publish_commit": "main:3eb5fc7777fd1d26741ad84e5a4aef81448684ad"
 }

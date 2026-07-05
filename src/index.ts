@@ -81,6 +81,15 @@ function buildDialogHtml(tokenLabel: string): string {
 			border-radius: 4px; background: var(--joplin-background-color, #fff);
 			color: var(--joplin-color, #222);
 		}
+		/* Make the native date field's calendar icon visible in any theme and
+		   clickable. Without color-scheme the indicator can render dark-on-dark
+		   and disappear; invert(0.5) forces a mid-grey glyph that shows on both
+		   light and dark backgrounds. */
+		#itg-wrap input[type="date"] { color-scheme: light dark; cursor: pointer; }
+		#itg-wrap input[type="date"]::-webkit-calendar-picker-indicator {
+			opacity: 1; cursor: pointer; filter: invert(0.5);
+			width: 18px; height: 18px;
+		}
 		#itg-wrap .hint { font-size: 0.85em; opacity: 0.75; }
 		#itg-wrap .row { display: flex; gap: 12px; }
 		#itg-wrap .row .field { flex: 1; }
@@ -95,7 +104,7 @@ function buildDialogHtml(tokenLabel: string): string {
 			<div class="row">
 				<div class="field">
 					<label class="lbl" for="itg-due">Due date <span class="hint">(optional)</span></label>
-					<input type="date" id="itg-due" name="due" />
+					<input type="date" id="itg-due" name="due" onclick="try{ this.showPicker(); }catch(e){}" />
 				</div>
 			</div>
 			<div class="field">
