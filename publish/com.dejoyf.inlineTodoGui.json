@@ -21,6 +21,9 @@
 	"screenshots": [],
 	"icons": {},
 	"promo_tile": {},
-	"_publish_hash": "sha256:f3cf7a87b09472650dbb8252a83e78964c59655618e6f1bd2578dfb29782ce6d",
-	"_publish_commit": "main:3f3caea67c1e7dfe6aabb4a3af05c8549440da0f"
+	"platforms": [
+		"desktop"
+	],
+	"_publish_hash": "sha256:1116efb7e0f17870cdb140d692b0ec409f2445ce25327927ceb3c3ed2d24bd08",
+	"_publish_commit": "main:af7e36c0726cdd7f28fa11a9bed62d589c60283d"
 }

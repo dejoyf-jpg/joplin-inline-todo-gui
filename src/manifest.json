@@ -20,5 +20,8 @@
 	],
 	"screenshots": [],
 	"icons": {},
-	"promo_tile": {}
+	"promo_tile": {},
+	"platforms": [
+		"desktop"
+	]
 }

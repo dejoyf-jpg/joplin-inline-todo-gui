@@ -1,7 +1,7 @@
 {
   "name": "joplin-plugin-inline-todo-gui",
-  "version": "1.0.0",
-  "description": "GUI quick-add for Inline TODO tasks: a form with a due-date picker and tag checkboxes that inserts the correct @TODO markdown for you.",
+  "version": "1.2.4",
+  "description": "Convert the text at your cursor into an @TODO checkbox with an optional due date (calendar) and tags, in both the Markdown and Rich Text editors. Companion to the Inline TODO plugin (plugin.calebjohn.todo).",
   "scripts": {
     "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && webpack --env joplin-plugin-config=createArchive",
     "prepare": "npm run dist",
@@ -26,5 +26,11 @@
     "typescript": "^4.8.2",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
+  },
+  "author": "Frank DeJoy",
+  "homepage": "https://github.com/dejoyf-jpg/homelab/tree/main/plugins/joplin-inline-todo-gui",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dejoyf-jpg/homelab.git"
   }
 }
