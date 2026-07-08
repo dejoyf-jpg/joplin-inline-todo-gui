@@ -4,6 +4,7 @@ import {
 	MenuItemLocation,
 	ToolbarButtonLocation,
 	ToastType,
+	ContentScriptType,
 } from 'api/types';
 
 const SECTION = 'inlineTodoGui';
@@ -38,25 +39,35 @@ function esc(s: string): string {
 		.replace(/"/g, '&quot;');
 }
 
+function pad2(n: number): string {
+	return (n < 10 ? '0' : '') + n;
+}
+
+// Default due date shown in the dialog: tomorrow, as YYYY-MM-DD.
+function tomorrowISO(): string {
+	const d = new Date();
+	d.setDate(d.getDate() + 1);
+	return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+}
+
 async function getSettings() {
 	const token = ((await joplin.settings.value(`${SECTION}.token`)) || '@TODO').trim() || '@TODO';
 	const dateFirst = await joplin.settings.value(`${SECTION}.dateFirst`);
-	return {
-		token,
-		dateFirst: dateFirst !== false,
-	};
+	return { token, dateFirst: dateFirst !== false };
 }
 
-// Build the line the Inline TODO plugin (plugin.calebjohn.todo) recognizes:
-//   - [ ] @TODO <text> //<due> +tag1 +tag2
-function buildTodoLine(opts: {
+// Build the checkbox *content* (everything after "- [ ] ") that the Inline TODO
+// plugin (plugin.calebjohn.todo) recognizes:  @TODO <text> //<due> +tag1 +tag2
+// The "- [ ] " is added afterwards by Joplin's textCheckbox command, so the line
+// becomes a real, clickable checkbox in both the Markdown and Rich Text editors.
+function buildTodoContent(opts: {
 	token: string;
 	text: string;
 	due: string;
 	tags: string[];
 	dateFirst: boolean;
 }): string {
-	const parts: string[] = [`- [ ] ${opts.token} ${opts.text.trim()}`];
+	const parts: string[] = [`${opts.token} ${opts.text.trim()}`];
 	const dueToken = opts.due ? `//${opts.due}` : '';
 	const tagTokens = opts.tags.map((t) => `+${t}`);
 	if (opts.dateFirst) {
@@ -69,51 +80,50 @@ function buildTodoLine(opts: {
 	return parts.join(' ');
 }
 
-function buildDialogHtml(tokenLabel: string): string {
+function buildDialogHtml(taskText: string, tokenLabel: string): string {
 	return `
 	<style>
-		#itg-wrap { font-family: var(--joplin-font-family, sans-serif); min-width: 380px; }
-		#itg-wrap h3 { margin: 0 0 12px 0; font-size: 1.1em; }
-		#itg-wrap .field { margin-bottom: 12px; display: flex; flex-direction: column; }
-		#itg-wrap label.lbl { font-weight: 600; margin-bottom: 4px; font-size: 0.9em; }
-		#itg-wrap input[type="text"], #itg-wrap input[type="date"] {
-			padding: 7px 8px; font-size: 1em; border: 1px solid var(--joplin-divider-color, #ccc);
-			border-radius: 4px; background: var(--joplin-background-color, #fff);
-			color: var(--joplin-color, #222);
-		}
-		#itg-wrap input[type="date"] { color-scheme: light dark; cursor: pointer; }
-		/* Joplin's dialog webview does not render the native date-picker icon
-		   (confirmed: even the Templates plugin shows none) and sanitizes out
-		   <svg>/inline handlers. A plain emoji is just text, so it renders like
-		   the field labels do; the <label for> forwards clicks to open the picker. */
-		#itg-wrap .date-row { display: flex; gap: 8px; align-items: center; }
-		#itg-wrap .date-row input[type="date"] { flex: 1; }
-		#itg-wrap .cal-label { font-size: 20px; line-height: 1; cursor: pointer; user-select: none; }
-		#itg-wrap .hint { font-size: 0.85em; opacity: 0.75; }
-		#itg-wrap .row { display: flex; gap: 12px; }
-		#itg-wrap .row .field { flex: 1; }
+		#itg-wrap { font-family: var(--joplin-font-family, sans-serif); min-width: 340px; max-width: 400px; color: var(--joplin-color, #222); }
+		#itg-wrap h3 { margin: 0 0 10px 0; font-size: 1.05em; }
+		#itg-wrap .field { margin-bottom: 12px; }
+		#itg-wrap label.lbl { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.9em; }
+		#itg-wrap .taskbox { padding: 7px 8px; border: 1px solid var(--joplin-divider-color, #ccc); border-radius: 4px; background: rgba(128,128,128,0.10); font-family: var(--joplin-font-family, monospace); word-break: break-word; }
+		#itg-wrap input[type="text"], #itg-wrap input[type="date"] { width: 100%; box-sizing: border-box; padding: 7px 8px; font-size: 1em; border: 1px solid var(--joplin-divider-color, #ccc); border-radius: 4px; background: var(--joplin-background-color, #fff); color: var(--joplin-color, #222); }
+		#itg-wrap .hint { font-size: 0.82em; opacity: 0.72; font-weight: normal; }
+		/* Calendar drawn by dialog.js. Always shown; the date field above also accepts typing. */
+		#itg-cal { border: 1px solid var(--joplin-divider-color, #ccc); border-radius: 6px; padding: 8px; margin-top: 8px; user-select: none; }
+		#itg-cal .itg-cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+		#itg-cal .itg-cal-title { font-weight: 600; }
+		#itg-cal .itg-nav { border: none; background: transparent; cursor: pointer; font-size: 1.25em; line-height: 1; padding: 2px 12px; border-radius: 4px; color: var(--joplin-color, #222); }
+		#itg-cal .itg-nav:hover { background: rgba(128,128,128,0.18); }
+		#itg-cal .itg-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+		#itg-cal .itg-wd { text-align: center; font-size: 0.72em; opacity: 0.6; padding: 2px 0; }
+		#itg-cal .itg-day { border: none; background: transparent; cursor: pointer; padding: 6px 0; border-radius: 4px; font-size: 0.9em; color: var(--joplin-color, #222); }
+		#itg-cal .itg-day:hover { background: rgba(128,128,128,0.18); }
+		#itg-cal .itg-empty { visibility: hidden; }
+		#itg-cal .itg-today { outline: 1px solid #4b7bec; }
+		#itg-cal .itg-selected { background: #4b7bec; color: #fff; }
+		#itg-cal .itg-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+		#itg-cal .itg-quick { border: 1px solid var(--joplin-divider-color, #ccc); background: transparent; color: var(--joplin-color, #222); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-size: 0.82em; }
+		#itg-cal .itg-quick:hover { background: rgba(128,128,128,0.18); }
 	</style>
 	<div id="itg-wrap">
 		<form name="main">
-			<h3>New Inline TODO</h3>
+			<h3>Convert to Inline TODO</h3>
 			<div class="field">
-				<label class="lbl" for="itg-text">Task</label>
-				<input type="text" id="itg-text" name="text" autofocus placeholder="What needs doing?" />
-			</div>
-			<div class="row">
-				<div class="field">
-					<label class="lbl" for="itg-due">Due date <span class="hint">(optional)</span></label>
-					<div class="date-row">
-						<input type="date" id="itg-due" name="due" />
-						<label class="cal-label" for="itg-due" title="Open the calendar">📅</label>
-					</div>
-				</div>
+				<label class="lbl">Task</label>
+				<div class="taskbox">${esc(taskText)}</div>
 			</div>
 			<div class="field">
-				<label class="lbl" for="itg-tags">Tags <span class="hint">(optional, space or comma separated, no + needed)</span></label>
+				<label class="lbl" for="itg-due">Due date <span class="hint">(defaults to tomorrow &mdash; type it, or click a day below)</span></label>
+				<input type="date" id="itg-due" name="due" value="${tomorrowISO()}" />
+				<div id="itg-cal"></div>
+			</div>
+			<div class="field">
+				<label class="lbl" for="itg-tags">Tags <span class="hint">(optional, space or comma separated)</span></label>
 				<input type="text" id="itg-tags" name="tags" placeholder="e.g. BOB DealFlow" />
 			</div>
-			<div class="hint">Inserts a <code>${esc(tokenLabel)}</code> checkbox line at your cursor.</div>
+			<div class="hint">Replaces the text from your cursor to the end of the line with a <code>${esc(tokenLabel)}</code> line.</div>
 		</form>
 	</div>
 	`;
@@ -126,7 +136,7 @@ joplin.plugins.register({
 			label: 'Inline TODO Quick Add',
 			iconName: 'fas fa-check-square',
 			description:
-				'GUI quick-add that writes the @TODO markdown recognized by the Inline TODO plugin (plugin.calebjohn.todo).',
+				'Convert the text right of your cursor into an @TODO line recognized by the Inline TODO plugin (plugin.calebjohn.todo).',
 		});
 
 		await joplin.settings.registerSettings({
@@ -150,43 +160,67 @@ joplin.plugins.register({
 			},
 		});
 
+		// -------------------- Content script (Markdown/CM6 editor) --------------------
+		await joplin.contentScripts.register(
+			ContentScriptType.CodeMirrorPlugin,
+			'inlineTodoGuiCm',
+			'./contentScript.js',
+		);
+
 		// -------------------- Dialog --------------------
 		const dialog = await joplin.views.dialogs.create(DIALOG_ID);
 		await joplin.views.dialogs.setButtons(dialog, [
-			{ id: 'ok', title: 'Insert' },
+			{ id: 'ok', title: 'Convert' },
 			{ id: 'cancel', title: 'Cancel' },
 		]);
 		await joplin.views.dialogs.setFitToContent(dialog, true);
+		// CSP-safe interactivity (the calendar) via a loaded script, not inline handlers.
+		await joplin.views.dialogs.addScript(dialog, './dialog.js');
 
 		// -------------------- Command --------------------
 		await joplin.commands.register({
-			name: 'inlineTodoGui.add',
-			label: 'Add Inline TODO…',
-			// Font Awesome 5 name (Joplin bundles FA 5.15.4); the FA6 name
-			// "fa-square-check" renders blank on Joplin.
+			name: 'inlineTodoGui.convert',
+			label: 'Convert to Inline TODO…',
 			iconName: 'fas fa-check-square',
 			execute: async () => {
-				const { token, dateFirst } = await getSettings();
+				// Markdown editor: grab cursor -> end of line (or the selection) via
+				// the content script. Rich text editor: fall back to the selection.
+				let grabbed: { from: number; to: number; text: string } | null = null;
+				try {
+					grabbed = await joplin.commands.execute('editor.execCommand', {
+						name: 'inlineTodoGuiGrab',
+					});
+				} catch (e) {
+					grabbed = null;
+				}
 
-				await joplin.views.dialogs.setHtml(dialog, buildDialogHtml(token));
+				let text = '';
+				let range: { from: number; to: number } | null = null;
+				if (grabbed && typeof grabbed.text === 'string' && grabbed.text.trim()) {
+					text = grabbed.text.trim();
+					range = { from: grabbed.from, to: grabbed.to };
+				} else {
+					text = ((await joplin.commands.execute('selectedText')) || '').trim();
+				}
 
-				const result = await joplin.views.dialogs.open(dialog);
-				if (!result || result.id !== 'ok') return;
-
-				const form = (result.formData && result.formData.main) || {};
-				const text = (form.text || '').trim();
 				if (!text) {
 					await joplin.views.dialogs.showToast({
-						message: 'Inline TODO not added: task text was empty.',
+						message:
+							'Markdown: put your cursor left of the task. Rich text: highlight the task. Then run this.',
 						type: ToastType.Info,
 					});
 					return;
 				}
 
-				// Tags are optional, free-text only.
-				const tags = parseTagList(form.tags || '');
+				const { token, dateFirst } = await getSettings();
+				await joplin.views.dialogs.setHtml(dialog, buildDialogHtml(text, token));
 
-				const line = buildTodoLine({
+				const result = await joplin.views.dialogs.open(dialog);
+				if (!result || result.id !== 'ok') return;
+
+				const form = (result.formData && result.formData.main) || {};
+				const tags = parseTagList(form.tags || '');
+				const content = buildTodoContent({
 					token,
 					text,
 					due: (form.due || '').trim(),
@@ -195,16 +229,37 @@ joplin.plugins.register({
 				});
 
 				try {
-					// Insert at the cursor in the markdown editor.
-					await joplin.commands.execute('insertText', `${line}\n`);
+					if (range) {
+						// Markdown: insert a real checkbox line directly. It renders as a
+						// clickable checkbox (via Rich Markdown / the preview pane).
+						await joplin.commands.execute('editor.execCommand', {
+							name: 'inlineTodoGuiReplaceRange',
+							args: [range.from, range.to, '- [ ] ' + content],
+						});
+					} else {
+						// Rich text: insert the text, refocus the editor (the modal dialog
+						// stole focus, which made the checklist command silently no-op),
+						// then convert the line to a real checkbox with the same command
+						// the core checklist toolbar button uses.
+						await joplin.commands.execute('replaceSelection', content);
+						try {
+							await joplin.commands.execute('focusElement', 'noteBody');
+						} catch (e) {
+							/* focusElement is desktop-only; ignore if unavailable */
+						}
+						// The exact command Joplin's own Rich Text checklist button fires.
+						// (textCheckbox is Markdown-editor-only, which is why it did nothing here.)
+						await joplin.commands.execute('editor.execCommand', {
+							name: 'InsertJoplinChecklist',
+						});
+					}
 					await joplin.views.dialogs.showToast({
-						message: 'Inline TODO added.',
+						message: 'Converted to Inline TODO.',
 						type: ToastType.Success,
 					});
 				} catch (e) {
 					await joplin.views.dialogs.showToast({
-						message:
-							'Could not insert. Open the note in the Markdown editor (not the rich text editor) and try again.',
+						message: 'Could not replace the text. Try again in the note editor.',
 						type: ToastType.Error,
 					});
 				}
@@ -214,14 +269,14 @@ joplin.plugins.register({
 		// -------------------- Menu + toolbar --------------------
 		await joplin.views.menuItems.create(
 			'inlineTodoGuiToolsMenu',
-			'inlineTodoGui.add',
+			'inlineTodoGui.convert',
 			MenuItemLocation.Tools,
 			{ accelerator: 'CmdOrCtrl+Alt+T' },
 		);
 
 		await joplin.views.toolbarButtons.create(
 			'inlineTodoGuiToolbarButton',
-			'inlineTodoGui.add',
+			'inlineTodoGui.convert',
 			ToolbarButtonLocation.EditorToolbar,
 		);
 	},

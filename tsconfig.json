@@ -5,7 +5,10 @@
 		"target": "es2015",
 		"jsx": "react",
 		"allowJs": true,
-		"baseUrl": ".",
+		"paths": {
+			"api": ["./api"],
+			"api/*": ["./api/*"]
+		},
 		"skipLibCheck": true
 	},
 	"include": ["src/**/*", "api/index.ts"]
