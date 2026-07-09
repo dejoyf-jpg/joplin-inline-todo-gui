@@ -83,7 +83,9 @@ function buildTodoContent(opts: {
 function buildDialogHtml(taskText: string, tokenLabel: string): string {
 	return `
 	<style>
-		#itg-wrap { font-family: var(--joplin-font-family, sans-serif); min-width: 340px; max-width: 400px; color: var(--joplin-color, #222); }
+		/* Fixed, centered width so the content never renders wider than the dialog
+		   window (which was clipping the right-hand weekday columns and nav). */
+		#itg-wrap { font-family: var(--joplin-font-family, sans-serif); width: 320px; max-width: 100%; margin: 0 auto; box-sizing: border-box; color: var(--joplin-color, #222); }
 		#itg-wrap h3 { margin: 0 0 10px 0; font-size: 1.05em; }
 		#itg-wrap .field { margin-bottom: 12px; }
 		#itg-wrap label.lbl { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.9em; }
@@ -96,7 +98,7 @@ function buildDialogHtml(taskText: string, tokenLabel: string): string {
 		#itg-cal .itg-cal-title { font-weight: 600; }
 		#itg-cal .itg-nav { border: none; background: transparent; cursor: pointer; font-size: 1.25em; line-height: 1; padding: 2px 12px; border-radius: 4px; color: var(--joplin-color, #222); }
 		#itg-cal .itg-nav:hover { background: rgba(128,128,128,0.18); }
-		#itg-cal .itg-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+		#itg-cal .itg-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
 		#itg-cal .itg-wd { text-align: center; font-size: 0.72em; opacity: 0.6; padding: 2px 0; }
 		#itg-cal .itg-day { border: none; background: transparent; cursor: pointer; padding: 6px 0; border-radius: 4px; font-size: 0.9em; color: var(--joplin-color, #222); }
 		#itg-cal .itg-day:hover { background: rgba(128,128,128,0.18); }
@@ -173,7 +175,11 @@ joplin.plugins.register({
 			{ id: 'ok', title: 'Convert' },
 			{ id: 'cancel', title: 'Cancel' },
 		]);
-		await joplin.views.dialogs.setFitToContent(dialog, true);
+		// Do NOT fit-to-content for width: Joplin was clamping the dialog window
+		// narrower than the form, clipping the right weekday columns and the
+		// next-month nav. Let the dialog use its default width; #itg-wrap is a
+		// fixed, centered 320px so the whole calendar is always visible.
+		await joplin.views.dialogs.setFitToContent(dialog, false);
 		// CSP-safe interactivity (the calendar) via a loaded script, not inline handlers.
 		await joplin.views.dialogs.addScript(dialog, './dialog.js');
 

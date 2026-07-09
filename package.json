@@ -1,6 +1,6 @@
 {
   "name": "joplin-plugin-inline-todo-gui",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Convert the text at your cursor into an @TODO checkbox with an optional due date (calendar) and tags, in both the Markdown and Rich Text editors. Companion to the Inline TODO plugin (plugin.calebjohn.todo).",
   "scripts": {
     "dist": "webpack --env joplin-plugin-config=buildMain && webpack --env joplin-plugin-config=buildExtraScripts && webpack --env joplin-plugin-config=createArchive",
