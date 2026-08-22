@@ -43,17 +43,71 @@ function pad2(n: number): string {
 	return (n < 10 ? '0' : '') + n;
 }
 
-// Default due date shown in the dialog: tomorrow, as YYYY-MM-DD.
-function tomorrowISO(): string {
-	const d = new Date();
-	d.setDate(d.getDate() + 1);
+// The values the "Default due date" setting can take, and their labels. The
+// label is shown in the dialog hint so it never contradicts the setting.
+const DEFAULT_DUE_OPTIONS: Record<string, string> = {
+	none: 'No date',
+	today: 'Today',
+	tomorrow: 'Tomorrow',
+	plus7: 'One week out',
+	nextMonday: 'Next Monday',
+};
+
+// Format a Date as YYYY-MM-DD using its LOCAL calendar fields.
+//
+// This must never go through toISOString() or a parsed date string. Both work in
+// UTC, so anywhere west of UTC an evening date formats as the NEXT day. Reading
+// the local getters is the only construction that is correct at every hour.
+function localISO(d: Date): string {
 	return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
 }
 
+// The date the dialog's due field is pre-filled with. Returns '' for 'none'.
+//
+// All offsets go through setDate(), which does CALENDAR arithmetic. Adding
+// n * 86400000 milliseconds instead would be wrong across a daylight-saving
+// change: on a 23-hour spring-forward day it lands a full date too far.
+function defaultDueISO(choice: string): string {
+	const d = new Date();
+	switch (choice) {
+		case 'none':
+			return '';
+		case 'today':
+			break;
+		case 'plus7':
+			d.setDate(d.getDate() + 7);
+			break;
+		case 'nextMonday':
+			// getDay(): 0 = Sunday. The `|| 7` keeps "next Monday" in the future
+			// when today IS Monday, instead of returning today.
+			d.setDate(d.getDate() + (((8 - d.getDay()) % 7) || 7));
+			break;
+		case 'tomorrow':
+		default:
+			d.setDate(d.getDate() + 1);
+			break;
+	}
+	return localISO(d);
+}
+
+// Force the task keyword into the shape the Inline TODO plugin can actually see.
+//
+// Its scanner requires an @word, a //date or a +tag on the line. A keyword with
+// no leading "@" is none of those, so a task with a blank date and no tags would
+// be written correctly and then never appear in the summary note. Blank dates
+// became easy in 1.3.0, so this guard is what stops that silent loss.
+function normalizeToken(raw: string): string {
+	const t = (raw || '').trim().replace(/\s+/g, '');
+	if (!t) return '@TODO';
+	return t.startsWith('@') ? t : '@' + t;
+}
+
 async function getSettings() {
-	const token = ((await joplin.settings.value(`${SECTION}.token`)) || '@TODO').trim() || '@TODO';
+	const token = normalizeToken(await joplin.settings.value(`${SECTION}.token`));
 	const dateFirst = await joplin.settings.value(`${SECTION}.dateFirst`);
-	return { token, dateFirst: dateFirst !== false };
+	const rawDue = await joplin.settings.value(`${SECTION}.defaultDue`);
+	const defaultDue = DEFAULT_DUE_OPTIONS[rawDue] ? rawDue : 'tomorrow';
+	return { token, dateFirst: dateFirst !== false, defaultDue };
 }
 
 // Build the checkbox *content* (everything after "- [ ] ") that the Inline TODO
@@ -80,7 +134,12 @@ function buildTodoContent(opts: {
 	return parts.join(' ');
 }
 
-function buildDialogHtml(taskText: string, tokenLabel: string): string {
+function buildDialogHtml(
+	taskText: string,
+	tokenLabel: string,
+	duePrefill: string,
+	dueHint: string,
+): string {
 	return `
 	<style>
 		/* Fixed, centered width so the content never renders wider than the dialog
@@ -117,15 +176,19 @@ function buildDialogHtml(taskText: string, tokenLabel: string): string {
 				<div class="taskbox">${esc(taskText)}</div>
 			</div>
 			<div class="field">
-				<label class="lbl" for="itg-due">Due date <span class="hint">(defaults to tomorrow &mdash; type it, or click a day below)</span></label>
-				<input type="date" id="itg-due" name="due" value="${tomorrowISO()}" />
+				<label class="lbl" for="itg-due">Due date <span class="hint">${esc(dueHint)}</span></label>
+				<input type="date" id="itg-due" name="due" value="${duePrefill}" />
 				<div id="itg-cal"></div>
 			</div>
 			<div class="field">
 				<label class="lbl" for="itg-tags">Tags <span class="hint">(optional, space or comma separated)</span></label>
 				<input type="text" id="itg-tags" name="tags" placeholder="e.g. BOB DealFlow" />
 			</div>
-			<div class="hint">Replaces the text from your cursor to the end of the line with a <code>${esc(tokenLabel)}</code> line.</div>
+			<div class="field">
+				<label class="lbl" for="itg-keyword">Keyword <span class="hint">(groups this task in the summary note)</span></label>
+				<input type="text" id="itg-keyword" name="keyword" value="${esc(tokenLabel)}" />
+			</div>
+			<div class="hint">Replaces the text from your cursor to the end of the line with a checkbox line.</div>
 		</form>
 	</div>
 	`;
@@ -147,9 +210,20 @@ joplin.plugins.register({
 				type: SettingItemType.String,
 				section: SECTION,
 				public: true,
-				label: 'Task keyword',
+				label: 'Default task keyword',
 				description:
-					'The keyword the Inline TODO plugin scans for. Default @TODO. Change only if you customised the plugin.',
+					'Starts with @. The Inline TODO plugin treats this as the task\'s category and groups the summary note by it, so different keywords make different groups. Any @word works and @TODO is only a convention. This is the starting value; you can change it per task in the dialog.',
+			},
+			[`${SECTION}.defaultDue`]: {
+				value: 'tomorrow',
+				type: SettingItemType.String,
+				isEnum: true,
+				options: DEFAULT_DUE_OPTIONS,
+				section: SECTION,
+				public: true,
+				label: 'Default due date',
+				description:
+					'What the due date field is pre-filled with when the dialog opens. Choose "No date" to start blank. You can always pick, change or clear the date in the dialog.',
 			},
 			[`${SECTION}.dateFirst`]: {
 				value: true,
@@ -218,16 +292,28 @@ joplin.plugins.register({
 					return;
 				}
 
-				const { token, dateFirst } = await getSettings();
-				await joplin.views.dialogs.setHtml(dialog, buildDialogHtml(text, token));
+				const { token, dateFirst, defaultDue } = await getSettings();
+				const duePrefill = defaultDueISO(defaultDue);
+				const dueHint =
+					defaultDue === 'none'
+						? '(optional, type it or click a day below)'
+						: `(defaults to ${DEFAULT_DUE_OPTIONS[defaultDue].toLowerCase()}, type it or click a day below)`;
+				await joplin.views.dialogs.setHtml(
+					dialog,
+					buildDialogHtml(text, token, duePrefill, dueHint),
+				);
 
 				const result = await joplin.views.dialogs.open(dialog);
 				if (!result || result.id !== 'ok') return;
 
 				const form = (result.formData && result.formData.main) || {};
 				const tags = parseTagList(form.tags || '');
+				// A blank keyword field falls back to the setting, and both go through
+				// normalizeToken, so a cleared field can never emit a line the Inline
+				// TODO scanner cannot see.
+				const taskToken = normalizeToken(form.keyword || token);
 				const content = buildTodoContent({
-					token,
+					token: taskToken,
 					text,
 					due: (form.due || '').trim(),
 					tags,
