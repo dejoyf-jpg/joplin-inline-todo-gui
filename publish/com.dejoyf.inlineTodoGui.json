@@ -24,6 +24,6 @@
 	"platforms": [
 		"desktop"
 	],
-	"_publish_hash": "sha256:87ca0ce314e853511986ac54cb7d5cb7cb849a17889b0931476b5c7d31da7e06",
-	"_publish_commit": "main:9cacc6fdf78a52eb96b8186cc4eadac9d8183a41"
+	"_publish_hash": "sha256:ca134ea2d4b77ec2c4cfe3bf2a3fc37fa6b77c5471f47437f60d9c8c15410eca",
+	"_publish_commit": "main:f4c973e42962359c8fabb0569413c90013d02471"
 }
