@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4.1
+
+### Changed
+
+- New example todo in the README, a neutral tags placeholder in the dialog,
+  and clearer code comments. Documentation only, no behavior change.
+
 ## 1.4.0 (2026-08-23)
 
 Mobile support (Android).

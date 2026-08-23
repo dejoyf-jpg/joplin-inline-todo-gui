@@ -25,7 +25,7 @@ you have one) and opens a dialog with:
 On **Convert**, the line becomes a real checkbox:
 
 ```markdown
-- [ ] @TODO Call Scott about Brookfield //2026-07-08 +BOB +DealFlow
+- [ ] @TODO this is a test TODO //2026-07-08 +work +urgent
 ```
 
 This works in **both** the Markdown editor and the Rich Text editor.

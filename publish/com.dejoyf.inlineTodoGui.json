@@ -2,7 +2,7 @@
 	"manifest_version": 1,
 	"id": "com.dejoyf.inlineTodoGui",
 	"app_min_version": "3.4.2",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"name": "Inline TODO Quick Add",
 	"description": "Place your cursor in front of a task in a note, run the command, and it converts the text to the right of the cursor into an @TODO checkbox line with an optional due date (configurable default, including no date) and tags. Pairs with the Inline TODO plugin (plugin.calebjohn.todo). Works on desktop and on Joplin Android (tap in the task line, then tap the toolbar button).",
 	"author": "Frank DeJoy",
@@ -25,6 +25,6 @@
 		"desktop",
 		"mobile"
 	],
-	"_publish_hash": "sha256:bcd552772a7ca1e964ce6bed6fcbcc7e98793e8a39ac8bdfbd10ef23867b4151",
-	"_publish_commit": "main:e332a04015499d6b707b5a35089b171b6715752c"
+	"_publish_hash": "sha256:a57014793b1569b3b93bee483c35bb7cfcb056292c8513a26115b8ef21125e10",
+	"_publish_commit": "main:1b229ebbf6450d66f1f0dabfca2853dd445d266f"
 }

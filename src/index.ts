@@ -192,7 +192,7 @@ function buildDialogHtml(
 			</div>
 			<div class="field">
 				<label class="lbl" for="itg-tags">Tags <span class="hint">(optional, space or comma separated)</span></label>
-				<input type="text" id="itg-tags" name="tags" placeholder="e.g. BOB DealFlow" />
+				<input type="text" id="itg-tags" name="tags" placeholder="e.g. work urgent" />
 			</div>
 			<div class="field">
 				<label class="lbl" for="itg-keyword">Keyword <span class="hint">(groups this task in the summary note)</span></label>

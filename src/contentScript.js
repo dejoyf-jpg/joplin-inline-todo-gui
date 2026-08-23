@@ -33,8 +33,8 @@ module.exports = {
 						var rest = lineText.slice(indent.length);
 						// A leading "- ", "* ", "+ ", "1. ", "1) " and an optional
 						// existing "[ ]"/"[x]" box are part of the replaced range but
-						// not of the task text, so converting "- call Scott" yields
-						// "- [ ] @TODO call Scott" and never "- [ ] @TODO - call Scott".
+						// not of the task text, so converting "- this is a test TODO" yields
+						// "- [ ] @TODO this is a test TODO", never a doubled marker.
 						var marker = (rest.match(/^(?:[-*+]|\d+[.)])\s+(?:\[[ xX]\]\s+)?/) || [''])[0];
 						from = line.from + indent.length;
 						to = line.to;
