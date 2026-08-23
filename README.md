@@ -32,6 +32,29 @@ This works in **both** the Markdown editor and the Rich Text editor.
 
 The calebjohn plugin then picks it up under **Tools > Create TODO summary note**.
 
+## Mobile (Android)
+
+Since v1.4.0 the plugin also runs on Joplin mobile (Joplin 3.4.2 or later,
+matching the Inline TODO plugin's own minimum). The flow is adapted for touch:
+
+- **Trigger**: tap the check-square button in the editor toolbar (the toolbar
+  above the keyboard). Mobile has no Tools menu and no keyboard shortcut, so
+  the toolbar button is the only trigger there.
+- **Grab**: tap anywhere inside the task line, no need to place the cursor at
+  the start. On mobile the plugin takes the whole line, keeps its indentation,
+  and drops a leading `- `, `* `, `+ `, numbered-list marker or existing
+  checkbox so it is replaced rather than doubled. A selection, if you make one,
+  still wins.
+- **Dialog**: the same dialog, with larger touch targets. The due date field is
+  a native date input; the click-to-pick calendar works by touch as well.
+
+Mobile has no Rich Text editor, so the note is always Markdown there.
+
+**iOS**: unsupported and untested, permanently. The author has no Apple
+device, so no iOS release of this plugin has ever been exercised and iOS
+issues are not tracked. Android is the supported mobile platform. See
+`CHANGELOG.md` before installing on iOS.
+
 ## Settings
 
 **Tools > Options > Inline TODO Quick Add**:
@@ -53,6 +76,9 @@ The calebjohn plugin then picks it up under **Tools > Create TODO summary note**
 
 **From file**: grab [`publish/com.dejoyf.inlineTodoGui.jpl`](publish/com.dejoyf.inlineTodoGui.jpl),
 then in Joplin use **Tools > Options > Plugins > Install from file** and restart.
+
+**On mobile**: **Configuration > Plugins**, enable plugin support, then search
+for "Inline TODO Quick Add".
 
 ## Notes
 

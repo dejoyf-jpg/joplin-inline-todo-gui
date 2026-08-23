@@ -139,12 +139,16 @@ function buildDialogHtml(
 	tokenLabel: string,
 	duePrefill: string,
 	dueHint: string,
+	isMobile: boolean,
 ): string {
+	const grabHint = isMobile
+		? 'Replaces the task line (or your selection) with a checkbox line.'
+		: 'Replaces the text from your cursor to the end of the line with a checkbox line.';
 	return `
 	<style>
 		/* Fixed, centered width so the content never renders wider than the dialog
 		   window (which was clipping the right-hand weekday columns and nav). */
-		#itg-wrap { font-family: var(--joplin-font-family, sans-serif); width: 320px; max-width: 100%; margin: 0 auto; box-sizing: border-box; color: var(--joplin-color, #222); }
+		#itg-wrap { font-family: var(--joplin-font-family, sans-serif); width: 100%; max-width: 320px; margin: 0 auto; box-sizing: border-box; color: var(--joplin-color, #222); }
 		#itg-wrap h3 { margin: 0 0 10px 0; font-size: 1.05em; }
 		#itg-wrap .field { margin-bottom: 12px; }
 		#itg-wrap label.lbl { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.9em; }
@@ -167,8 +171,14 @@ function buildDialogHtml(
 		#itg-cal .itg-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
 		#itg-cal .itg-quick { border: 1px solid var(--joplin-divider-color, #ccc); background: transparent; color: var(--joplin-color, #222); border-radius: 4px; padding: 4px 9px; cursor: pointer; font-size: 0.82em; }
 		#itg-cal .itg-quick:hover { background: rgba(128,128,128,0.18); }
+		/* Mobile only: same dialog, bigger touch targets. Desktop rendering is unchanged
+		   because these rules require the itg-mobile class, which desktop never gets. */
+		#itg-wrap.itg-mobile input[type="text"], #itg-wrap.itg-mobile input[type="date"] { padding: 10px; font-size: 1.05em; }
+		#itg-wrap.itg-mobile .itg-day { padding: 11px 0; font-size: 1em; }
+		#itg-wrap.itg-mobile .itg-quick { padding: 8px 12px; font-size: 0.9em; }
+		#itg-wrap.itg-mobile .itg-nav { padding: 6px 16px; }
 	</style>
-	<div id="itg-wrap">
+	<div id="itg-wrap"${isMobile ? ' class="itg-mobile"' : ''}>
 		<form name="main">
 			<h3>Convert to Inline TODO</h3>
 			<div class="field">
@@ -188,7 +198,7 @@ function buildDialogHtml(
 				<label class="lbl" for="itg-keyword">Keyword <span class="hint">(groups this task in the summary note)</span></label>
 				<input type="text" id="itg-keyword" name="keyword" value="${esc(tokenLabel)}" />
 			</div>
-			<div class="hint">Replaces the text from your cursor to the end of the line with a checkbox line.</div>
+			<div class="hint">${grabHint}</div>
 		</form>
 	</div>
 	`;
@@ -196,6 +206,20 @@ function buildDialogHtml(
 
 joplin.plugins.register({
 	onStart: async function () {
+		// -------------------- Platform --------------------
+		// versionInfo().platform is 'desktop' or 'mobile' (present since Joplin
+		// 3.0, verified in the v3.0.15 source). Mobile has no menu bar, no
+		// keyboard accelerators and no Rich Text editor, so a few paths below
+		// branch on this. Anything unexpected is treated as desktop, which is
+		// the behavior this plugin always had.
+		let isMobile = false;
+		try {
+			const info = await joplin.versionInfo();
+			isMobile = !!info && info.platform === 'mobile';
+		} catch (e) {
+			isMobile = false;
+		}
+
 		// -------------------- Settings --------------------
 		await joplin.settings.registerSection(SECTION, {
 			label: 'Inline TODO Quick Add',
@@ -267,8 +291,14 @@ joplin.plugins.register({
 				// the content script. Rich text editor: fall back to the selection.
 				let grabbed: { from: number; to: number; text: string } | null = null;
 				try {
+					// The argument asks for whole-line mode. On a phone, placing the
+					// cursor exactly at the start of the task is a clumsy gesture, so
+					// mobile grabs the whole line (minus any leading bullet or
+					// checkbox marker). Desktop passes false and behaves exactly as
+					// before: selection if any, else cursor to end of line.
 					grabbed = await joplin.commands.execute('editor.execCommand', {
 						name: 'inlineTodoGuiGrab',
+						args: [isMobile],
 					});
 				} catch (e) {
 					grabbed = null;
@@ -285,8 +315,9 @@ joplin.plugins.register({
 
 				if (!text) {
 					await joplin.views.dialogs.showToast({
-						message:
-							'Markdown: put your cursor left of the task. Rich text: highlight the task. Then run this.',
+						message: isMobile
+							? 'Tap inside the task line, then tap the convert button in the editor toolbar.'
+							: 'Markdown: put your cursor left of the task. Rich text: highlight the task. Then run this.',
 						type: ToastType.Info,
 					});
 					return;
@@ -300,7 +331,7 @@ joplin.plugins.register({
 						: `(defaults to ${DEFAULT_DUE_OPTIONS[defaultDue].toLowerCase()}, type it or click a day below)`;
 				await joplin.views.dialogs.setHtml(
 					dialog,
-					buildDialogHtml(text, token, duePrefill, dueHint),
+					buildDialogHtml(text, token, duePrefill, dueHint, isMobile),
 				);
 
 				const result = await joplin.views.dialogs.open(dialog);
@@ -328,6 +359,13 @@ joplin.plugins.register({
 							name: 'inlineTodoGuiReplaceRange',
 							args: [range.from, range.to, '- [ ] ' + content],
 						});
+					} else if (isMobile) {
+						// Mobile fallback, only reached if the content script grab was
+						// unavailable. Mobile has no Rich Text editor, so the note is
+						// always Markdown: insert a complete checkbox line over the
+						// selection. focusElement and InsertJoplinChecklist do not exist
+						// on mobile and are never called on this path.
+						await joplin.commands.execute('replaceSelection', '- [ ] ' + content);
 					} else {
 						// Rich text: insert the text, refocus the editor (the modal dialog
 						// stole focus, which made the checklist command silently no-op),
@@ -359,12 +397,18 @@ joplin.plugins.register({
 		});
 
 		// -------------------- Menu + toolbar --------------------
-		await joplin.views.menuItems.create(
-			'inlineTodoGuiToolsMenu',
-			'inlineTodoGui.convert',
-			MenuItemLocation.Tools,
-			{ accelerator: 'CmdOrCtrl+Alt+T' },
-		);
+		// The menuItems API is documented desktop-only (see
+		// api/JoplinViewsMenuItems.d.ts), and mobile has no Tools menu and no
+		// keyboard, so the menu entry and the Ctrl+Alt+T accelerator are
+		// desktop-only. On mobile the editor toolbar button below is the trigger.
+		if (!isMobile) {
+			await joplin.views.menuItems.create(
+				'inlineTodoGuiToolsMenu',
+				'inlineTodoGui.convert',
+				MenuItemLocation.Tools,
+				{ accelerator: 'CmdOrCtrl+Alt+T' },
+			);
+		}
 
 		await joplin.views.toolbarButtons.create(
 			'inlineTodoGuiToolbarButton',
