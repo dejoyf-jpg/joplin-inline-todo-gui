@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.4.2
+
+### Changed
+
+- Listing metadata only, no behavior change. `repository_url` is set to the form
+  Joplin's plugin registry has on record for this plugin id, so the registry can
+  ingest new releases again. `homepage_url` and the npm `repository` field still
+  point at this repository, and Joplin's Report issue link resolves here.
+
 ## 1.4.1
 
 ### Changed
