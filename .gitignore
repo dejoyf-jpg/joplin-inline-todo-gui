@@ -1,3 +1,5 @@
 dist/
 node_modules/
 tests/.extracted.pure.mts
+tests/richtext/node_modules/
+tests/richtext/conv.bundle.js

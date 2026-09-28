@@ -1,0 +1,379 @@
+[
+ {
+  "name": "stress: 500-line paragraph, convert line 250",
+  "md": "Line number 0001\nLine number 0002\nLine number 0003\nLine number 0004\nLine number 0005\nLine number 0006\nLine number 0007\nLine number 0008\nLine number 0009\nLine number 0010\nLine number 0011\nLine number 0012\nLine number 0013\nLine number 0014\nLine number 0015\nLine number 0016\nLine number 0017\nLine number 0018\nLine number 0019\nLine number 0020\nLine number 0021\nLine number 0022\nLine number 0023\nLine number 0024\nLine number 0025\nLine number 0026\nLine number 0027\nLine number 0028\nLine number 0029\nLine number 0030\nLine number 0031\nLine number 0032\nLine number 0033\nLine number 0034\nLine number 0035\nLine number 0036\nLine number 0037\nLine number 0038\nLine number 0039\nLine number 0040\nLine number 0041\nLine number 0042\nLine number 0043\nLine number 0044\nLine number 0045\nLine number 0046\nLine number 0047\nLine number 0048\nLine number 0049\nLine number 0050\nLine number 0051\nLine number 0052\nLine number 0053\nLine number 0054\nLine number 0055\nLine number 0056\nLine number 0057\nLine number 0058\nLine number 0059\nLine number 0060\nLine number 0061\nLine number 0062\nLine number 0063\nLine number 0064\nLine number 0065\nLine number 0066\nLine number 0067\nLine number 0068\nLine number 0069\nLine number 0070\nLine number 0071\nLine number 0072\nLine number 0073\nLine number 0074\nLine number 0075\nLine number 0076\nLine number 0077\nLine number 0078\nLine number 0079\nLine number 0080\nLine number 0081\nLine number 0082\nLine number 0083\nLine number 0084\nLine number 0085\nLine number 0086\nLine number 0087\nLine number 0088\nLine number 0089\nLine number 0090\nLine number 0091\nLine number 0092\nLine number 0093\nLine number 0094\nLine number 0095\nLine number 0096\nLine number 0097\nLine number 0098\nLine number 0099\nLine number 0100\nLine number 0101\nLine number 0102\nLine number 0103\nLine number 0104\nLine number 0105\nLine number 0106\nLine number 0107\nLine number 0108\nLine number 0109\nLine number 0110\nLine number 0111\nLine number 0112\nLine number 0113\nLine number 0114\nLine number 0115\nLine number 0116\nLine number 0117\nLine number 0118\nLine number 0119\nLine number 0120\nLine number 0121\nLine number 0122\nLine number 0123\nLine number 0124\nLine number 0125\nLine number 0126\nLine number 0127\nLine number 0128\nLine number 0129\nLine number 0130\nLine number 0131\nLine number 0132\nLine number 0133\nLine number 0134\nLine number 0135\nLine number 0136\nLine number 0137\nLine number 0138\nLine number 0139\nLine number 0140\nLine number 0141\nLine number 0142\nLine number 0143\nLine number 0144\nLine number 0145\nLine number 0146\nLine number 0147\nLine number 0148\nLine number 0149\nLine number 0150\nLine number 0151\nLine number 0152\nLine number 0153\nLine number 0154\nLine number 0155\nLine number 0156\nLine number 0157\nLine number 0158\nLine number 0159\nLine number 0160\nLine number 0161\nLine number 0162\nLine number 0163\nLine number 0164\nLine number 0165\nLine number 0166\nLine number 0167\nLine number 0168\nLine number 0169\nLine number 0170\nLine number 0171\nLine number 0172\nLine number 0173\nLine number 0174\nLine number 0175\nLine number 0176\nLine number 0177\nLine number 0178\nLine number 0179\nLine number 0180\nLine number 0181\nLine number 0182\nLine number 0183\nLine number 0184\nLine number 0185\nLine number 0186\nLine number 0187\nLine number 0188\nLine number 0189\nLine number 0190\nLine number 0191\nLine number 0192\nLine number 0193\nLine number 0194\nLine number 0195\nLine number 0196\nLine number 0197\nLine number 0198\nLine number 0199\nLine number 0200\nLine number 0201\nLine number 0202\nLine number 0203\nLine number 0204\nLine number 0205\nLine number 0206\nLine number 0207\nLine number 0208\nLine number 0209\nLine number 0210\nLine number 0211\nLine number 0212\nLine number 0213\nLine number 0214\nLine number 0215\nLine number 0216\nLine number 0217\nLine number 0218\nLine number 0219\nLine number 0220\nLine number 0221\nLine number 0222\nLine number 0223\nLine number 0224\nLine number 0225\nLine number 0226\nLine number 0227\nLine number 0228\nLine number 0229\nLine number 0230\nLine number 0231\nLine number 0232\nLine number 0233\nLine number 0234\nLine number 0235\nLine number 0236\nLine number 0237\nLine number 0238\nLine number 0239\nLine number 0240\nLine number 0241\nLine number 0242\nLine number 0243\nLine number 0244\nLine number 0245\nLine number 0246\nLine number 0247\nLine number 0248\nLine number 0249\nLine number 0250\nLine number 0251\nLine number 0252\nLine number 0253\nLine number 0254\nLine number 0255\nLine number 0256\nLine number 0257\nLine number 0258\nLine number 0259\nLine number 0260\nLine number 0261\nLine number 0262\nLine number 0263\nLine number 0264\nLine number 0265\nLine number 0266\nLine number 0267\nLine number 0268\nLine number 0269\nLine number 0270\nLine number 0271\nLine number 0272\nLine number 0273\nLine number 0274\nLine number 0275\nLine number 0276\nLine number 0277\nLine number 0278\nLine number 0279\nLine number 0280\nLine number 0281\nLine number 0282\nLine number 0283\nLine number 0284\nLine number 0285\nLine number 0286\nLine number 0287\nLine number 0288\nLine number 0289\nLine number 0290\nLine number 0291\nLine number 0292\nLine number 0293\nLine number 0294\nLine number 0295\nLine number 0296\nLine number 0297\nLine number 0298\nLine number 0299\nLine number 0300\nLine number 0301\nLine number 0302\nLine number 0303\nLine number 0304\nLine number 0305\nLine number 0306\nLine number 0307\nLine number 0308\nLine number 0309\nLine number 0310\nLine number 0311\nLine number 0312\nLine number 0313\nLine number 0314\nLine number 0315\nLine number 0316\nLine number 0317\nLine number 0318\nLine number 0319\nLine number 0320\nLine number 0321\nLine number 0322\nLine number 0323\nLine number 0324\nLine number 0325\nLine number 0326\nLine number 0327\nLine number 0328\nLine number 0329\nLine number 0330\nLine number 0331\nLine number 0332\nLine number 0333\nLine number 0334\nLine number 0335\nLine number 0336\nLine number 0337\nLine number 0338\nLine number 0339\nLine number 0340\nLine number 0341\nLine number 0342\nLine number 0343\nLine number 0344\nLine number 0345\nLine number 0346\nLine number 0347\nLine number 0348\nLine number 0349\nLine number 0350\nLine number 0351\nLine number 0352\nLine number 0353\nLine number 0354\nLine number 0355\nLine number 0356\nLine number 0357\nLine number 0358\nLine number 0359\nLine number 0360\nLine number 0361\nLine number 0362\nLine number 0363\nLine number 0364\nLine number 0365\nLine number 0366\nLine number 0367\nLine number 0368\nLine number 0369\nLine number 0370\nLine number 0371\nLine number 0372\nLine number 0373\nLine number 0374\nLine number 0375\nLine number 0376\nLine number 0377\nLine number 0378\nLine number 0379\nLine number 0380\nLine number 0381\nLine number 0382\nLine number 0383\nLine number 0384\nLine number 0385\nLine number 0386\nLine number 0387\nLine number 0388\nLine number 0389\nLine number 0390\nLine number 0391\nLine number 0392\nLine number 0393\nLine number 0394\nLine number 0395\nLine number 0396\nLine number 0397\nLine number 0398\nLine number 0399\nLine number 0400\nLine number 0401\nLine number 0402\nLine number 0403\nLine number 0404\nLine number 0405\nLine number 0406\nLine number 0407\nLine number 0408\nLine number 0409\nLine number 0410\nLine number 0411\nLine number 0412\nLine number 0413\nLine number 0414\nLine number 0415\nLine number 0416\nLine number 0417\nLine number 0418\nLine number 0419\nLine number 0420\nLine number 0421\nLine number 0422\nLine number 0423\nLine number 0424\nLine number 0425\nLine number 0426\nLine number 0427\nLine number 0428\nLine number 0429\nLine number 0430\nLine number 0431\nLine number 0432\nLine number 0433\nLine number 0434\nLine number 0435\nLine number 0436\nLine number 0437\nLine number 0438\nLine number 0439\nLine number 0440\nLine number 0441\nLine number 0442\nLine number 0443\nLine number 0444\nLine number 0445\nLine number 0446\nLine number 0447\nLine number 0448\nLine number 0449\nLine number 0450\nLine number 0451\nLine number 0452\nLine number 0453\nLine number 0454\nLine number 0455\nLine number 0456\nLine number 0457\nLine number 0458\nLine number 0459\nLine number 0460\nLine number 0461\nLine number 0462\nLine number 0463\nLine number 0464\nLine number 0465\nLine number 0466\nLine number 0467\nLine number 0468\nLine number 0469\nLine number 0470\nLine number 0471\nLine number 0472\nLine number 0473\nLine number 0474\nLine number 0475\nLine number 0476\nLine number 0477\nLine number 0478\nLine number 0479\nLine number 0480\nLine number 0481\nLine number 0482\nLine number 0483\nLine number 0484\nLine number 0485\nLine number 0486\nLine number 0487\nLine number 0488\nLine number 0489\nLine number 0490\nLine number 0491\nLine number 0492\nLine number 0493\nLine number 0494\nLine number 0495\nLine number 0496\nLine number 0497\nLine number 0498\nLine number 0499\nLine number 0500\n",
+  "target": "Line number 0250",
+  "checkUndo": true
+ },
+ {
+  "name": "stress: 50 sequential conversions in a 100-line paragraph",
+  "md": "Line number 0001\nLine number 0002\nLine number 0003\nLine number 0004\nLine number 0005\nLine number 0006\nLine number 0007\nLine number 0008\nLine number 0009\nLine number 0010\nLine number 0011\nLine number 0012\nLine number 0013\nLine number 0014\nLine number 0015\nLine number 0016\nLine number 0017\nLine number 0018\nLine number 0019\nLine number 0020\nLine number 0021\nLine number 0022\nLine number 0023\nLine number 0024\nLine number 0025\nLine number 0026\nLine number 0027\nLine number 0028\nLine number 0029\nLine number 0030\nLine number 0031\nLine number 0032\nLine number 0033\nLine number 0034\nLine number 0035\nLine number 0036\nLine number 0037\nLine number 0038\nLine number 0039\nLine number 0040\nLine number 0041\nLine number 0042\nLine number 0043\nLine number 0044\nLine number 0045\nLine number 0046\nLine number 0047\nLine number 0048\nLine number 0049\nLine number 0050\nLine number 0051\nLine number 0052\nLine number 0053\nLine number 0054\nLine number 0055\nLine number 0056\nLine number 0057\nLine number 0058\nLine number 0059\nLine number 0060\nLine number 0061\nLine number 0062\nLine number 0063\nLine number 0064\nLine number 0065\nLine number 0066\nLine number 0067\nLine number 0068\nLine number 0069\nLine number 0070\nLine number 0071\nLine number 0072\nLine number 0073\nLine number 0074\nLine number 0075\nLine number 0076\nLine number 0077\nLine number 0078\nLine number 0079\nLine number 0080\nLine number 0081\nLine number 0082\nLine number 0083\nLine number 0084\nLine number 0085\nLine number 0086\nLine number 0087\nLine number 0088\nLine number 0089\nLine number 0090\nLine number 0091\nLine number 0092\nLine number 0093\nLine number 0094\nLine number 0095\nLine number 0096\nLine number 0097\nLine number 0098\nLine number 0099\nLine number 0100\n",
+  "targets": [
+   {
+    "text": "Line number 0001",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0003",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0005",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0007",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0009",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0011",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0013",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0015",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0017",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0019",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0021",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0023",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0025",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0027",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0029",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0031",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0033",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0035",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0037",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0039",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0041",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0043",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0045",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0047",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0049",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0051",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0053",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0055",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0057",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0059",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0061",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0063",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0065",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0067",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0069",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0071",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0073",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0075",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0077",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0079",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0081",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0083",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0085",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0087",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0089",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0091",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0093",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0095",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0097",
+    "mode": "exact"
+   },
+   {
+    "text": "Line number 0099",
+    "mode": "exact"
+   }
+  ],
+  "expect": [
+   "- [ ] @TODO Line number 0001 //2026-09-29",
+   "Line number 0002",
+   "- [ ] @TODO Line number 0003 //2026-09-29",
+   "Line number 0004",
+   "- [ ] @TODO Line number 0005 //2026-09-29",
+   "Line number 0006",
+   "- [ ] @TODO Line number 0007 //2026-09-29",
+   "Line number 0008",
+   "- [ ] @TODO Line number 0009 //2026-09-29",
+   "Line number 0010",
+   "- [ ] @TODO Line number 0011 //2026-09-29",
+   "Line number 0012",
+   "- [ ] @TODO Line number 0013 //2026-09-29",
+   "Line number 0014",
+   "- [ ] @TODO Line number 0015 //2026-09-29",
+   "Line number 0016",
+   "- [ ] @TODO Line number 0017 //2026-09-29",
+   "Line number 0018",
+   "- [ ] @TODO Line number 0019 //2026-09-29",
+   "Line number 0020",
+   "- [ ] @TODO Line number 0021 //2026-09-29",
+   "Line number 0022",
+   "- [ ] @TODO Line number 0023 //2026-09-29",
+   "Line number 0024",
+   "- [ ] @TODO Line number 0025 //2026-09-29",
+   "Line number 0026",
+   "- [ ] @TODO Line number 0027 //2026-09-29",
+   "Line number 0028",
+   "- [ ] @TODO Line number 0029 //2026-09-29",
+   "Line number 0030",
+   "- [ ] @TODO Line number 0031 //2026-09-29",
+   "Line number 0032",
+   "- [ ] @TODO Line number 0033 //2026-09-29",
+   "Line number 0034",
+   "- [ ] @TODO Line number 0035 //2026-09-29",
+   "Line number 0036",
+   "- [ ] @TODO Line number 0037 //2026-09-29",
+   "Line number 0038",
+   "- [ ] @TODO Line number 0039 //2026-09-29",
+   "Line number 0040",
+   "- [ ] @TODO Line number 0041 //2026-09-29",
+   "Line number 0042",
+   "- [ ] @TODO Line number 0043 //2026-09-29",
+   "Line number 0044",
+   "- [ ] @TODO Line number 0045 //2026-09-29",
+   "Line number 0046",
+   "- [ ] @TODO Line number 0047 //2026-09-29",
+   "Line number 0048",
+   "- [ ] @TODO Line number 0049 //2026-09-29",
+   "Line number 0050",
+   "- [ ] @TODO Line number 0051 //2026-09-29",
+   "Line number 0052",
+   "- [ ] @TODO Line number 0053 //2026-09-29",
+   "Line number 0054",
+   "- [ ] @TODO Line number 0055 //2026-09-29",
+   "Line number 0056",
+   "- [ ] @TODO Line number 0057 //2026-09-29",
+   "Line number 0058",
+   "- [ ] @TODO Line number 0059 //2026-09-29",
+   "Line number 0060",
+   "- [ ] @TODO Line number 0061 //2026-09-29",
+   "Line number 0062",
+   "- [ ] @TODO Line number 0063 //2026-09-29",
+   "Line number 0064",
+   "- [ ] @TODO Line number 0065 //2026-09-29",
+   "Line number 0066",
+   "- [ ] @TODO Line number 0067 //2026-09-29",
+   "Line number 0068",
+   "- [ ] @TODO Line number 0069 //2026-09-29",
+   "Line number 0070",
+   "- [ ] @TODO Line number 0071 //2026-09-29",
+   "Line number 0072",
+   "- [ ] @TODO Line number 0073 //2026-09-29",
+   "Line number 0074",
+   "- [ ] @TODO Line number 0075 //2026-09-29",
+   "Line number 0076",
+   "- [ ] @TODO Line number 0077 //2026-09-29",
+   "Line number 0078",
+   "- [ ] @TODO Line number 0079 //2026-09-29",
+   "Line number 0080",
+   "- [ ] @TODO Line number 0081 //2026-09-29",
+   "Line number 0082",
+   "- [ ] @TODO Line number 0083 //2026-09-29",
+   "Line number 0084",
+   "- [ ] @TODO Line number 0085 //2026-09-29",
+   "Line number 0086",
+   "- [ ] @TODO Line number 0087 //2026-09-29",
+   "Line number 0088",
+   "- [ ] @TODO Line number 0089 //2026-09-29",
+   "Line number 0090",
+   "- [ ] @TODO Line number 0091 //2026-09-29",
+   "Line number 0092",
+   "- [ ] @TODO Line number 0093 //2026-09-29",
+   "Line number 0094",
+   "- [ ] @TODO Line number 0095 //2026-09-29",
+   "Line number 0096",
+   "- [ ] @TODO Line number 0097 //2026-09-29",
+   "Line number 0098",
+   "- [ ] @TODO Line number 0099 //2026-09-29",
+   "Line number 0100"
+  ]
+ },
+ {
+  "name": "stress: 10,000-character line between neighbors",
+  "md": "Alpha line\nword word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word\nCharlie line\n",
+  "target": "word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word word"
+ },
+ {
+  "name": "stress: 50 mixed special-character lines, convert the middle",
+  "md": "Row 0 a&b *s* _u_ [l] #h $d\nRow 1 a&b *s* _u_ [l] #h $d\nRow 2 a&b *s* _u_ [l] #h $d\nRow 3 a&b *s* _u_ [l] #h $d\nRow 4 a&b *s* _u_ [l] #h $d\nRow 5 a&b *s* _u_ [l] #h $d\nRow 6 a&b *s* _u_ [l] #h $d\nRow 7 a&b *s* _u_ [l] #h $d\nRow 8 a&b *s* _u_ [l] #h $d\nRow 9 a&b *s* _u_ [l] #h $d\nRow 10 a&b *s* _u_ [l] #h $d\nRow 11 a&b *s* _u_ [l] #h $d\nRow 12 a&b *s* _u_ [l] #h $d\nRow 13 a&b *s* _u_ [l] #h $d\nRow 14 a&b *s* _u_ [l] #h $d\nRow 15 a&b *s* _u_ [l] #h $d\nRow 16 a&b *s* _u_ [l] #h $d\nRow 17 a&b *s* _u_ [l] #h $d\nRow 18 a&b *s* _u_ [l] #h $d\nRow 19 a&b *s* _u_ [l] #h $d\nRow 20 a&b *s* _u_ [l] #h $d\nRow 21 a&b *s* _u_ [l] #h $d\nRow 22 a&b *s* _u_ [l] #h $d\nRow 23 a&b *s* _u_ [l] #h $d\nRow 24 a&b *s* _u_ [l] #h $d\nRow 25 a&b *s* _u_ [l] #h $d\nRow 26 a&b *s* _u_ [l] #h $d\nRow 27 a&b *s* _u_ [l] #h $d\nRow 28 a&b *s* _u_ [l] #h $d\nRow 29 a&b *s* _u_ [l] #h $d\nRow 30 a&b *s* _u_ [l] #h $d\nRow 31 a&b *s* _u_ [l] #h $d\nRow 32 a&b *s* _u_ [l] #h $d\nRow 33 a&b *s* _u_ [l] #h $d\nRow 34 a&b *s* _u_ [l] #h $d\nRow 35 a&b *s* _u_ [l] #h $d\nRow 36 a&b *s* _u_ [l] #h $d\nRow 37 a&b *s* _u_ [l] #h $d\nRow 38 a&b *s* _u_ [l] #h $d\nRow 39 a&b *s* _u_ [l] #h $d\nRow 40 a&b *s* _u_ [l] #h $d\nRow 41 a&b *s* _u_ [l] #h $d\nRow 42 a&b *s* _u_ [l] #h $d\nRow 43 a&b *s* _u_ [l] #h $d\nRow 44 a&b *s* _u_ [l] #h $d\nRow 45 a&b *s* _u_ [l] #h $d\nRow 46 a&b *s* _u_ [l] #h $d\nRow 47 a&b *s* _u_ [l] #h $d\nRow 48 a&b *s* _u_ [l] #h $d\nRow 49 a&b *s* _u_ [l] #h $d\n",
+  "target": "Row 25 a&b s u [l] #h $d",
+  "mode": "fromLineStart",
+  "expect": [
+   "Row 0 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 1 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 2 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 3 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 4 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 5 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 6 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 7 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 8 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 9 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 10 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 11 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 12 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 13 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 14 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 15 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 16 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 17 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 18 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 19 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 20 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 21 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 22 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 23 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 24 a&b *s* *u* \\[l\\] #h \\$d",
+   "- [ ] @TODO Row 25 a&b s u \\[l\\] #h \\$d //2026-09-29",
+   "Row 26 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 27 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 28 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 29 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 30 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 31 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 32 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 33 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 34 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 35 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 36 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 37 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 38 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 39 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 40 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 41 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 42 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 43 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 44 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 45 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 46 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 47 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 48 a&b *s* *u* \\[l\\] #h \\$d",
+   "Row 49 a&b *s* *u* \\[l\\] #h \\$d"
+  ]
+ }
+]

@@ -9,6 +9,8 @@ import {
 
 const SECTION = 'inlineTodoGui';
 const DIALOG_ID = 'inlineTodoGuiDialog';
+// Must match CONTENT_SCRIPT_ID in src/richTextConvert.js.
+const RICH_TEXT_SCRIPT_ID = 'inlineTodoGuiRichText';
 
 // Turn a free-form tag string into a clean tag token (letters, digits, _ and -).
 function sanitizeTag(raw: string): string {
@@ -267,6 +269,21 @@ joplin.plugins.register({
 			'./contentScript.js',
 		);
 
+		// -------------------- Content script (Rich Text editor) --------------------
+		// Ships richTextConvert.js into the Rich Text editor, where it registers
+		// a command that converts only the selected line. It posts 'ready' once
+		// it is running; until then the old checklist path is used.
+		let richTextReady = false;
+		await joplin.contentScripts.register(
+			ContentScriptType.MarkdownItPlugin,
+			RICH_TEXT_SCRIPT_ID,
+			'./richTextBridge.js',
+		);
+		await joplin.contentScripts.onMessage(RICH_TEXT_SCRIPT_ID, (message: any) => {
+			if (message && message.type === 'ready') richTextReady = true;
+			return true;
+		});
+
 		// -------------------- Dialog --------------------
 		const dialog = await joplin.views.dialogs.create(DIALOG_ID);
 		await joplin.views.dialogs.setButtons(dialog, [
@@ -366,12 +383,27 @@ joplin.plugins.register({
 						// selection. focusElement and InsertJoplinChecklist do not exist
 						// on mobile and are never called on this path.
 						await joplin.commands.execute('replaceSelection', '- [ ] ' + content);
+					} else if (richTextReady) {
+						// Rich text: convert only the selected line. Joplin's own
+						// checklist command converts the whole paragraph, and lines
+						// with no blank line between them are one paragraph there.
+						await joplin.commands.execute('editor.execCommand', {
+							name: 'mceInsertInlineTodoLine',
+							value: content,
+						});
+						try {
+							await joplin.commands.execute('focusElement', 'noteBody');
+						} catch (e) {
+							/* focusElement is desktop-only; ignore if unavailable */
+						}
 					} else {
-						// Rich text: insert the text, refocus the editor (the modal dialog
+						// Rich text, helper script not loaded: the 1.4.2 path.
+						// Insert the text, refocus the editor (the modal dialog
 						// stole focus, which made the checklist command silently no-op),
 						// then convert the line to a real checkbox with the same command
 						// the core checklist toolbar button uses.
-						await joplin.commands.execute('replaceSelection', content);
+						// replaceSelection takes HTML here, so escape the task text.
+						await joplin.commands.execute('replaceSelection', esc(content));
 						try {
 							await joplin.commands.execute('focusElement', 'noteBody');
 						} catch (e) {

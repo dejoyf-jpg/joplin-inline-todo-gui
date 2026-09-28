@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.4.3
+
+### Fixed
+
+- Rich Text editor: converting a line that has other lines directly above or
+  below it (no blank line between) no longer turns those neighboring lines into
+  checkboxes. Only the selected line becomes the task. Joplin's own checklist
+  command works on a whole paragraph, and adjacent lines are one paragraph in
+  the Rich Text editor, so the plugin now ships a small helper that Joplin loads
+  into the Rich Text editor and that converts just the selected line. The same
+  applies inside bullet and numbered lists; a numbered list keeps its numbering.
+- Rich Text editor: task text containing `<` or `&` is inserted as text, never
+  as markup.
+
+### Known limitation
+
+- Converting a list item that has its own sub-items also turns those sub-items
+  into checkboxes when the note is saved. That is how Joplin stores a checkbox
+  item's children, not something the plugin controls.
+
 ## 1.4.2
 
 ### Changed

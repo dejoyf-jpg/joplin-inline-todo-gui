@@ -1,0 +1,94 @@
+[
+ {
+  "name": "bug repro: middle of 3 adjacent lines",
+  "md": "Alpha line\nBravo line\nCharlie line\n",
+  "target": "Bravo line",
+  "checkUndo": true
+ },
+ {
+  "name": "top of 3 adjacent lines",
+  "md": "Alpha line\nBravo line\nCharlie line\n",
+  "target": "Alpha line"
+ },
+ {
+  "name": "bottom of 3 adjacent lines",
+  "md": "Alpha line\nBravo line\nCharlie line\n",
+  "target": "Charlie line"
+ },
+ {
+  "name": "regression: line isolated by blank lines",
+  "md": "Alpha line\n\nBravo line\n\nCharlie line\n",
+  "target": "Bravo line",
+  "checkUndo": true
+ },
+ {
+  "name": "regression: single-line note",
+  "md": "Only line\n",
+  "target": "Only line"
+ },
+ {
+  "name": "selection runs through the line break (triple-click)",
+  "md": "Alpha line\nBravo line\nCharlie line\n",
+  "target": "Bravo line",
+  "mode": "withBr"
+ },
+ {
+  "name": "triple-click on last line",
+  "md": "Alpha line\nBravo line\nCharlie line\n",
+  "target": "Charlie line",
+  "mode": "withBr"
+ },
+ {
+  "name": "special characters < & \" > * _ `",
+  "md": "Alpha line\nPay A&B &lt;vendor&gt; \"now\" 5\\*3 snake_case [x]\nCharlie line\n",
+  "target": "Pay A&B <vendor> \"now\" 5*3 snake_case [x]"
+ },
+ {
+  "name": "line with bold word",
+  "md": "Alpha line\nCall **Bob** today\nCharlie line\n",
+  "target": "Call Bob today",
+  "mode": "fromLineStart",
+  "expect": [
+   "Alpha line",
+   "- [ ] @TODO Call Bob today //2026-09-29",
+   "Charlie line"
+  ]
+ },
+ {
+  "name": "below a heading",
+  "md": "# Heading\nAlpha line\nBravo line\n",
+  "target": "Alpha line"
+ },
+ {
+  "name": "next to an existing checklist",
+  "md": "- [ ] existing task\n\nAlpha line\nBravo line\n",
+  "target": "Alpha line"
+ },
+ {
+  "name": "unicode and emoji",
+  "md": "Alpha line\nCaf\u00e9 r\u00e9sum\u00e9 \u65e5\u672c\u8a9e \ud83d\ude80 done\nCharlie line\n",
+  "target": "Caf\u00e9 r\u00e9sum\u00e9 \u65e5\u672c\u8a9e \ud83d\ude80 done"
+ },
+ {
+  "name": "same text on two lines, convert the second",
+  "md": "Repeat me\nMiddle\nRepeat me\n",
+  "target": "Repeat me",
+  "occurrence": 1,
+  "expect": [
+   "Repeat me",
+   "Middle",
+   "- [ ] @TODO Repeat me //2026-09-29"
+  ]
+ },
+ {
+  "name": "line with inline code",
+  "md": "Alpha line\nRun `make build` now\nCharlie line\n",
+  "target": "Run make build now",
+  "mode": "fromLineStart",
+  "expect": [
+   "Alpha line",
+   "- [ ] @TODO Run make build now //2026-09-29",
+   "Charlie line"
+  ]
+ }
+]

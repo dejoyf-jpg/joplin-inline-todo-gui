@@ -1,0 +1,129 @@
+[
+ {
+  "name": "list: middle bullet of 3",
+  "md": "- one\n- two\n- three\n",
+  "target": "two",
+  "expect": [
+   "- one",
+   "- [ ] @TODO two //2026-09-29",
+   "- three"
+  ]
+ },
+ {
+  "name": "list: numbered item keeps numbering after",
+  "md": "1. one\n2. two\n3. three\n",
+  "target": "two",
+  "expect": [
+   "1.  one",
+   "- [ ] @TODO two //2026-09-29",
+   "3.  three"
+  ]
+ },
+ {
+  "name": "list: item inside existing checklist stays a checkbox",
+  "md": "- [ ] one\n- [ ] two\n- [ ] three\n",
+  "target": "two",
+  "expect": [
+   "- [ ] one",
+   "- [ ] @TODO two //2026-09-29",
+   "- [ ] three"
+  ]
+ },
+ {
+  "name": "list: bullet with nested child (known limitation: Joplin saves the child as a checkbox too)",
+  "md": "- parent\n    - child\n- sibling\n",
+  "target": "parent",
+  "expect": [
+   "- [ ] @TODO parent //2026-09-29",
+   "    - [ ] child",
+   "- sibling"
+  ]
+ },
+ {
+  "name": "heading line (1.4.2 path, unchanged)",
+  "md": "# Heading here\nAlpha line\n",
+  "target": "Heading here",
+  "expect": [
+   "- [ ] @TODO Heading here //2026-09-29",
+   "Alpha line"
+  ]
+ },
+ {
+  "name": "blockquote with adjacent lines",
+  "md": "> Alpha line\n> Bravo line\n> Charlie line\n",
+  "target": "Bravo line",
+  "expect": [
+   "> Alpha line",
+   ">",
+   "> - [ ] @TODO Bravo line //2026-09-29",
+   ">",
+   "> Charlie line"
+  ]
+ },
+ {
+  "name": "partial selection keeps rest of line in the item",
+  "md": "Alpha line\nBuy milk and eggs\nCharlie line\n",
+  "target": "milk",
+  "expect": [
+   "Alpha line",
+   "- [ ] Buy @TODO milk //2026-09-29 and eggs",
+   "Charlie line"
+  ]
+ },
+ {
+  "name": "sequential: convert lines 1, 3, 5 of one paragraph",
+  "md": "L1\nL2\nL3\nL4\nL5\n",
+  "targets": [
+   {
+    "text": "L1",
+    "mode": "exact"
+   },
+   {
+    "text": "L3",
+    "mode": "exact"
+   },
+   {
+    "text": "L5",
+    "mode": "exact"
+   }
+  ],
+  "expect": [
+   "- [ ] @TODO L1 //2026-09-29",
+   "L2",
+   "- [ ] @TODO L3 //2026-09-29",
+   "L4",
+   "- [ ] @TODO L5 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "sequential: convert two neighbors",
+  "md": "Alpha line\nBravo line\nCharlie line\n",
+  "targets": [
+   {
+    "text": "Alpha line",
+    "mode": "exact"
+   },
+   {
+    "text": "Bravo line",
+    "mode": "exact"
+   }
+  ],
+  "expect": [
+   "- [ ] @TODO Alpha line //2026-09-29",
+   "- [ ] @TODO Bravo line //2026-09-29",
+   "Charlie line"
+  ]
+ },
+ {
+  "name": "numbered list with start=5",
+  "md": "5. five\n6. six\n7. seven\n8. eight\n",
+  "target": "six",
+  "expect": [
+   "5.  five",
+   "- [ ] @TODO six //2026-09-29",
+   "7.  seven",
+   "8.  eight"
+  ]
+ }
+]
