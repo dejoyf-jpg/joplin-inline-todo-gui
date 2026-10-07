@@ -123,8 +123,19 @@ function buildTodoContent(opts: {
 	tags: string[];
 	dateFirst: boolean;
 }): string {
-	const parts: string[] = [`${opts.token} ${opts.text.trim()}`];
-	const dueToken = opts.due ? `//${opts.due}` : '';
+	// A line converted twice (or typed with the keyword already in it) must not
+	// come out as "@TODO @TODO ...": one leading keyword is dropped first.
+	let text = opts.text.trim();
+	if (text.toLowerCase().startsWith(`${opts.token.toLowerCase()} `)) text = text.slice(opts.token.length).trim();
+	// Likewise a due date already in the line is not kept beside the new one;
+	// it stands in only when the dialog's date field was left blank.
+	let due = opts.due;
+	text = text.replace(/(^|\s)\/\/(\d{4}-\d{2}-\d{2})(?=\s|$)/g, (_m, sp, d) => {
+		if (!due) due = d;
+		return sp ? ' ' : '';
+	}).replace(/\s{2,}/g, ' ').trim();
+	const parts: string[] = [`${opts.token} ${text}`];
+	const dueToken = due ? `//${due}` : '';
 	const tagTokens = opts.tags.map((t) => `+${t}`);
 	if (opts.dateFirst) {
 		if (dueToken) parts.push(dueToken);

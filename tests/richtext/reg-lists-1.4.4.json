@@ -1,0 +1,930 @@
+[
+ {
+  "name": "bullet list of 1: convert #1",
+  "md": "- item 01\n",
+  "target": "item 01",
+  "expect": [
+   "- [ ] @TODO item 01 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 2: convert #1",
+  "md": "- item 01\n- item 02\n",
+  "target": "item 01",
+  "expect": [
+   "- [ ] @TODO item 01 //2026-09-29",
+   "&nbsp;",
+   "- item 02"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 2: convert #2",
+  "md": "- item 01\n- item 02\n",
+  "target": "item 02",
+  "expect": [
+   "- item 01",
+   "&nbsp;",
+   "- [ ] @TODO item 02 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 3: convert #1",
+  "md": "- item 01\n- item 02\n- item 03\n",
+  "target": "item 01",
+  "expect": [
+   "- [ ] @TODO item 01 //2026-09-29",
+   "&nbsp;",
+   "- item 02",
+   "- item 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 3: convert #2",
+  "md": "- item 01\n- item 02\n- item 03\n",
+  "target": "item 02",
+  "expect": [
+   "- item 01",
+   "&nbsp;",
+   "- [ ] @TODO item 02 //2026-09-29",
+   "&nbsp;",
+   "- item 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 3: convert #3",
+  "md": "- item 01\n- item 02\n- item 03\n",
+  "target": "item 03",
+  "expect": [
+   "- item 01",
+   "- item 02",
+   "&nbsp;",
+   "- [ ] @TODO item 03 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 10: convert #1",
+  "md": "- item 01\n- item 02\n- item 03\n- item 04\n- item 05\n- item 06\n- item 07\n- item 08\n- item 09\n- item 10\n",
+  "target": "item 01",
+  "expect": [
+   "- [ ] @TODO item 01 //2026-09-29",
+   "&nbsp;",
+   "- item 02",
+   "- item 03",
+   "- item 04",
+   "- item 05",
+   "- item 06",
+   "- item 07",
+   "- item 08",
+   "- item 09",
+   "- item 10"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 10: convert #5",
+  "md": "- item 01\n- item 02\n- item 03\n- item 04\n- item 05\n- item 06\n- item 07\n- item 08\n- item 09\n- item 10\n",
+  "target": "item 05",
+  "expect": [
+   "- item 01",
+   "- item 02",
+   "- item 03",
+   "- item 04",
+   "&nbsp;",
+   "- [ ] @TODO item 05 //2026-09-29",
+   "&nbsp;",
+   "- item 06",
+   "- item 07",
+   "- item 08",
+   "- item 09",
+   "- item 10"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list of 10: convert #10",
+  "md": "- item 01\n- item 02\n- item 03\n- item 04\n- item 05\n- item 06\n- item 07\n- item 08\n- item 09\n- item 10\n",
+  "target": "item 10",
+  "expect": [
+   "- item 01",
+   "- item 02",
+   "- item 03",
+   "- item 04",
+   "- item 05",
+   "- item 06",
+   "- item 07",
+   "- item 08",
+   "- item 09",
+   "&nbsp;",
+   "- [ ] @TODO item 10 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 1 of 3: convert #1",
+  "md": "1. step 01\n2. step 02\n3. step 03\n",
+  "target": "step 01",
+  "expect": [
+   "- [ ] @TODO step 01 //2026-09-29",
+   "&nbsp;",
+   "2.  step 02",
+   "3.  step 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 1 of 3: convert #2",
+  "md": "1. step 01\n2. step 02\n3. step 03\n",
+  "target": "step 02",
+  "expect": [
+   "1.  step 01",
+   "&nbsp;",
+   "- [ ] @TODO step 02 //2026-09-29",
+   "&nbsp;",
+   "3.  step 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 1 of 3: convert #3",
+  "md": "1. step 01\n2. step 02\n3. step 03\n",
+  "target": "step 03",
+  "expect": [
+   "1.  step 01",
+   "2.  step 02",
+   "&nbsp;",
+   "- [ ] @TODO step 03 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 1 of 10: convert #1",
+  "md": "1. step 01\n2. step 02\n3. step 03\n4. step 04\n5. step 05\n6. step 06\n7. step 07\n8. step 08\n9. step 09\n10. step 10\n",
+  "target": "step 01",
+  "expect": [
+   "- [ ] @TODO step 01 //2026-09-29",
+   "&nbsp;",
+   "2.  step 02",
+   "3.  step 03",
+   "4.  step 04",
+   "5.  step 05",
+   "6.  step 06",
+   "7.  step 07",
+   "8.  step 08",
+   "9.  step 09",
+   "10. step 10"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 1 of 10: convert #5",
+  "md": "1. step 01\n2. step 02\n3. step 03\n4. step 04\n5. step 05\n6. step 06\n7. step 07\n8. step 08\n9. step 09\n10. step 10\n",
+  "target": "step 05",
+  "expect": [
+   "1.  step 01",
+   "2.  step 02",
+   "3.  step 03",
+   "4.  step 04",
+   "&nbsp;",
+   "- [ ] @TODO step 05 //2026-09-29",
+   "&nbsp;",
+   "6.  step 06",
+   "7.  step 07",
+   "8.  step 08",
+   "9.  step 09",
+   "10. step 10"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 1 of 10: convert #10",
+  "md": "1. step 01\n2. step 02\n3. step 03\n4. step 04\n5. step 05\n6. step 06\n7. step 07\n8. step 08\n9. step 09\n10. step 10\n",
+  "target": "step 10",
+  "expect": [
+   "1.  step 01",
+   "2.  step 02",
+   "3.  step 03",
+   "4.  step 04",
+   "5.  step 05",
+   "6.  step 06",
+   "7.  step 07",
+   "8.  step 08",
+   "9.  step 09",
+   "&nbsp;",
+   "- [ ] @TODO step 10 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 5 of 3: convert #1",
+  "md": "5. step 01\n6. step 02\n7. step 03\n",
+  "target": "step 01",
+  "expect": [
+   "- [ ] @TODO step 01 //2026-09-29",
+   "&nbsp;",
+   "6.  step 02",
+   "7.  step 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 5 of 3: convert #2",
+  "md": "5. step 01\n6. step 02\n7. step 03\n",
+  "target": "step 02",
+  "expect": [
+   "5.  step 01",
+   "&nbsp;",
+   "- [ ] @TODO step 02 //2026-09-29",
+   "&nbsp;",
+   "7.  step 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 5 of 3: convert #3",
+  "md": "5. step 01\n6. step 02\n7. step 03\n",
+  "target": "step 03",
+  "expect": [
+   "5.  step 01",
+   "6.  step 02",
+   "&nbsp;",
+   "- [ ] @TODO step 03 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 5 of 10: convert #1",
+  "md": "5. step 01\n6. step 02\n7. step 03\n8. step 04\n9. step 05\n10. step 06\n11. step 07\n12. step 08\n13. step 09\n14. step 10\n",
+  "target": "step 01",
+  "expect": [
+   "- [ ] @TODO step 01 //2026-09-29",
+   "&nbsp;",
+   "6.  step 02",
+   "7.  step 03",
+   "8.  step 04",
+   "9.  step 05",
+   "10. step 06",
+   "11. step 07",
+   "12. step 08",
+   "13. step 09",
+   "14. step 10"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 5 of 10: convert #5",
+  "md": "5. step 01\n6. step 02\n7. step 03\n8. step 04\n9. step 05\n10. step 06\n11. step 07\n12. step 08\n13. step 09\n14. step 10\n",
+  "target": "step 05",
+  "expect": [
+   "5.  step 01",
+   "6.  step 02",
+   "7.  step 03",
+   "8.  step 04",
+   "&nbsp;",
+   "- [ ] @TODO step 05 //2026-09-29",
+   "&nbsp;",
+   "10. step 06",
+   "11. step 07",
+   "12. step 08",
+   "13. step 09",
+   "14. step 10"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered list start 5 of 10: convert #10",
+  "md": "5. step 01\n6. step 02\n7. step 03\n8. step 04\n9. step 05\n10. step 06\n11. step 07\n12. step 08\n13. step 09\n14. step 10\n",
+  "target": "step 10",
+  "expect": [
+   "5.  step 01",
+   "6.  step 02",
+   "7.  step 03",
+   "8.  step 04",
+   "9.  step 05",
+   "10. step 06",
+   "11. step 07",
+   "12. step 08",
+   "13. step 09",
+   "&nbsp;",
+   "- [ ] @TODO step 10 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "existing checklist of 3: convert #1 (no gap)",
+  "md": "- [ ] task 01\n- [ ] task 02\n- [ ] task 03\n",
+  "target": "task 01",
+  "expect": [
+   "- [ ] @TODO task 01 //2026-09-29",
+   "- [ ] task 02",
+   "- [ ] task 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "existing checklist of 3: convert #2 (no gap)",
+  "md": "- [ ] task 01\n- [ ] task 02\n- [ ] task 03\n",
+  "target": "task 02",
+  "expect": [
+   "- [ ] task 01",
+   "- [ ] @TODO task 02 //2026-09-29",
+   "- [ ] task 03"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "existing checklist of 3: convert #3 (no gap)",
+  "md": "- [ ] task 01\n- [ ] task 02\n- [ ] task 03\n",
+  "target": "task 03",
+  "expect": [
+   "- [ ] task 01",
+   "- [ ] task 02",
+   "- [ ] @TODO task 03 //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "existing checklist, checked neighbors stay checked",
+  "md": "- [x] done one\n- [ ] open two\n- [x] done three\n",
+  "target": "open two",
+  "expect": [
+   "- [x] done one",
+   "- [ ] @TODO open two //2026-09-29",
+   "- [x] done three"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "heading then bullets: convert first",
+  "md": "# Head\n- one\n- two\n- three\n",
+  "target": "one",
+  "expect": [
+   "# Head",
+   "- [ ] @TODO one //2026-09-29",
+   "&nbsp;",
+   "- two",
+   "- three"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "heading then bullets: convert last",
+  "md": "# Head\n- one\n- two\n- three\n",
+  "target": "three",
+  "expect": [
+   "# Head",
+   "- one",
+   "- two",
+   "&nbsp;",
+   "- [ ] @TODO three //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bold heading line then loose bullets: convert last",
+  "md": "**Notes**\n\n- one\n    \n- two\n    \n- three\n",
+  "target": "three",
+  "expect": [
+   "**Notes**",
+   "- one",
+   "- two",
+   "&nbsp;",
+   "- [ ] @TODO three //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullets then paragraph: convert last",
+  "md": "- one\n- two\n- three\n\nAfter para\n",
+  "target": "three",
+  "expect": [
+   "- one",
+   "- two",
+   "&nbsp;",
+   "- [ ] @TODO three //2026-09-29",
+   "After para"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullets then paragraph: convert first",
+  "md": "- one\n- two\n\nAfter para\n",
+  "target": "one",
+  "expect": [
+   "- [ ] @TODO one //2026-09-29",
+   "&nbsp;",
+   "- two",
+   "After para"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "paragraph then bullets: convert first",
+  "md": "Before para\n\n- one\n- two\n",
+  "target": "one",
+  "expect": [
+   "Before para",
+   "- [ ] @TODO one //2026-09-29",
+   "&nbsp;",
+   "- two"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list then numbered list: convert last bullet",
+  "md": "- a\n- b\n\n1. c\n2. d\n",
+  "target": "b",
+  "expect": [
+   "- a",
+   "&nbsp;",
+   "- [ ] @TODO b //2026-09-29",
+   "&nbsp;",
+   "1.  c",
+   "2.  d"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list then numbered list: convert first numbered",
+  "md": "- a\n- b\n\n1. c\n2. d\n",
+  "target": "c",
+  "expect": [
+   "- a",
+   "- b",
+   "&nbsp;",
+   "- [ ] @TODO c //2026-09-29",
+   "&nbsp;",
+   "2.  d"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "bullet list then numbered list: convert last numbered",
+  "md": "- a\n- b\n\n1. c\n2. d\n",
+  "target": "d",
+  "expect": [
+   "- a",
+   "- b",
+   "1.  c",
+   "&nbsp;",
+   "- [ ] @TODO d //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "numbered then bullet list: convert last numbered",
+  "md": "1. a\n2. b\n\n- c\n- d\n",
+  "target": "b",
+  "expect": [
+   "1.  a",
+   "&nbsp;",
+   "- [ ] @TODO b //2026-09-29",
+   "&nbsp;",
+   "- c",
+   "- d"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "list item with bold (selection from line start)",
+  "md": "- one\n- Call **Bob** today\n- three\n",
+  "target": "Call Bob today",
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO Call Bob today //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true,
+  "mode": "fromLineStart"
+ },
+ {
+  "name": "list item with link",
+  "md": "- one\n- see [Joplin](https://joplinapp.org) now\n- three\n",
+  "target": "see Joplin now",
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO see Joplin now //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true,
+  "mode": "fromLineStart"
+ },
+ {
+  "name": "list item with inline code",
+  "md": "- one\n- run `ls -la` now\n- three\n",
+  "target": "run ls -la now",
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO run ls -la now //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true,
+  "mode": "fromLineStart"
+ },
+ {
+  "name": "list item with < and &",
+  "md": "- one\n- Pay A&B &lt;vendor&gt; now\n- three\n",
+  "target": "Pay A&B <vendor> now",
+  "checkUndo": true,
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO Pay A&B &lt;vendor&gt; now //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ]
+ },
+ {
+  "name": "list item with emoji and unicode",
+  "md": "- one\n- Caf\u00e9 \u65e5\u672c\u8a9e \ud83d\ude80 go\n- three\n",
+  "target": "Caf\u00e9 \u65e5\u672c\u8a9e \ud83d\ude80 go",
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO Caf\u00e9 \u65e5\u672c\u8a9e \ud83d\ude80 go //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "list item with * and _ (escaped on save)",
+  "md": "- one\n- buy 5\\*3 snake_case\n- three\n",
+  "target": "buy 5*3 snake_case",
+  "checkUndo": true,
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO buy 5\\*3 snake_case //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ]
+ },
+ {
+  "name": "bullet middle, selection runs to the next block (withBr mode)",
+  "md": "- one\n- two\n- three\n",
+  "target": "two",
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO two //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true,
+  "mode": "withBr"
+ },
+ {
+  "name": "partial selection inside a bullet item",
+  "md": "- one\n- call Bob about the invoice\n- three\n",
+  "target": "call Bob",
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO call Bob //2026-09-29 about the invoice",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "partial selection at end of a bullet item",
+  "md": "- one\n- remember to call Bob\n- three\n",
+  "target": "call Bob",
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] remember to @TODO call Bob //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "partial selection inside the only item of a list",
+  "md": "- remember to call Bob\n",
+  "target": "call Bob",
+  "expect": [
+   "- [ ] remember to @TODO call Bob //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "two items of one list: 2 then 4 of 5",
+  "md": "- item 01\n- item 02\n- item 03\n- item 04\n- item 05\n",
+  "target": null,
+  "expect": [
+   "- item 01",
+   "&nbsp;",
+   "- [ ] @TODO item 02 //2026-09-29",
+   "&nbsp;",
+   "- item 03",
+   "&nbsp;",
+   "- [ ] @TODO item 04 //2026-09-29",
+   "&nbsp;",
+   "- item 05"
+  ],
+  "checkUndo": true,
+  "targets": [
+   {
+    "text": "item 02",
+    "mode": "exact"
+   },
+   {
+    "text": "item 04",
+    "mode": "exact"
+   }
+  ]
+ },
+ {
+  "name": "two adjacent items of one list: 2 then 3 of 4",
+  "md": "- item 01\n- item 02\n- item 03\n- item 04\n",
+  "target": null,
+  "expect": [
+   "- item 01",
+   "&nbsp;",
+   "- [ ] @TODO item 02 //2026-09-29",
+   "&nbsp;",
+   "- [ ] @TODO item 03 //2026-09-29",
+   "&nbsp;",
+   "- item 04"
+  ],
+  "checkUndo": true,
+  "targets": [
+   {
+    "text": "item 02",
+    "mode": "exact"
+   },
+   {
+    "text": "item 03",
+    "mode": "exact"
+   }
+  ]
+ },
+ {
+  "name": "two adjacent items of one list: 3 then 2 of 4 (reverse order)",
+  "md": "- item 01\n- item 02\n- item 03\n- item 04\n",
+  "target": null,
+  "expect": [
+   "- item 01",
+   "&nbsp;",
+   "- [ ] @TODO item 02 //2026-09-29",
+   "&nbsp;",
+   "- [ ] @TODO item 03 //2026-09-29",
+   "&nbsp;",
+   "- item 04"
+  ],
+  "checkUndo": true,
+  "targets": [
+   {
+    "text": "item 03",
+    "mode": "exact"
+   },
+   {
+    "text": "item 02",
+    "mode": "exact"
+   }
+  ]
+ },
+ {
+  "name": "first then last of 3",
+  "md": "- item 01\n- item 02\n- item 03\n",
+  "target": null,
+  "expect": [
+   "- [ ] @TODO item 01 //2026-09-29",
+   "&nbsp;",
+   "- item 02",
+   "&nbsp;",
+   "- [ ] @TODO item 03 //2026-09-29"
+  ],
+  "checkUndo": true,
+  "targets": [
+   {
+    "text": "item 01",
+    "mode": "exact"
+   },
+   {
+    "text": "item 03",
+    "mode": "exact"
+   }
+  ]
+ },
+ {
+  "name": "all three items of a 3-list, in order",
+  "md": "- item 01\n- item 02\n- item 03\n",
+  "target": null,
+  "expect": [
+   "- [ ] @TODO item 01 //2026-09-29",
+   "&nbsp;",
+   "- [ ] @TODO item 02 //2026-09-29",
+   "&nbsp;",
+   "- [ ] @TODO item 03 //2026-09-29"
+  ],
+  "checkUndo": true,
+  "targets": [
+   {
+    "text": "item 01",
+    "mode": "exact"
+   },
+   {
+    "text": "item 02",
+    "mode": "exact"
+   },
+   {
+    "text": "item 03",
+    "mode": "exact"
+   }
+  ]
+ },
+ {
+  "name": "numbered: two items 2 then 4 of 5, numbering",
+  "md": "1. step 01\n2. step 02\n3. step 03\n4. step 04\n5. step 05\n",
+  "target": null,
+  "expect": [
+   "1.  step 01",
+   "&nbsp;",
+   "- [ ] @TODO step 02 //2026-09-29",
+   "&nbsp;",
+   "3.  step 03",
+   "&nbsp;",
+   "- [ ] @TODO step 04 //2026-09-29",
+   "&nbsp;",
+   "5.  step 05"
+  ],
+  "checkUndo": true,
+  "targets": [
+   {
+    "text": "step 02",
+    "mode": "exact"
+   },
+   {
+    "text": "step 04",
+    "mode": "exact"
+   }
+  ]
+ },
+ {
+  "name": "convert the same item twice: no second gap",
+  "md": "- one\n- two\n- three\n",
+  "target": null,
+  "expect": [
+   "- one",
+   "&nbsp;",
+   "- [ ] @TODO @TODO two //2026-09-29 //2026-09-29",
+   "&nbsp;",
+   "- three"
+  ],
+  "checkUndo": true,
+  "targets": [
+   {
+    "text": "two",
+    "mode": "exact"
+   },
+   {
+    "text": "@TODO two //2026-09-29",
+    "mode": "exact"
+   }
+  ]
+ },
+ {
+  "name": "nested: convert parent (known limitation: child becomes checkbox)",
+  "md": "- parent\n    - child\n- sibling\n",
+  "target": "parent",
+  "expect": [
+   "- [ ] @TODO parent //2026-09-29",
+   "    - [ ] child",
+   "&nbsp;",
+   "- sibling"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "nested: convert only child",
+  "md": "- parent\n    - child\n- sibling\n",
+  "target": "child",
+  "checkUndo": true,
+  "expect": [
+   "- parent",
+   "    - [ ] @TODO child //2026-09-29",
+   "- sibling"
+  ]
+ },
+ {
+  "name": "nested: convert middle child of 3",
+  "md": "- parent\n    - c1\n    - c2\n    - c3\n- sibling\n",
+  "target": "c2",
+  "checkUndo": true,
+  "expect": [
+   "- parent",
+   "    - c1",
+   "    &nbsp;",
+   "    - [ ] @TODO c2 //2026-09-29",
+   "    &nbsp;",
+   "    - c3",
+   "- sibling"
+  ]
+ },
+ {
+  "name": "nested: convert sibling after a nested block",
+  "md": "- parent\n    - child\n- sibling\n",
+  "target": "sibling",
+  "expect": [
+   "- parent",
+   "    - child",
+   "&nbsp;",
+   "- [ ] @TODO sibling //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "nested: convert parent with 3 children then sibling",
+  "md": "- parent\n    - c1\n    - c2\n    - c3\n- sibling\n- last\n",
+  "target": "sibling",
+  "expect": [
+   "- parent",
+   "    - c1",
+   "    - c2",
+   "    - c3",
+   "&nbsp;",
+   "- [ ] @TODO sibling //2026-09-29",
+   "&nbsp;",
+   "- last"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "2026-10-07 report: loose 11-item list under bold heading, convert LAST",
+  "md": "**Notes**\n\n- Program Overview\n    \n- BEAD Engineering\n    \n- BEAD Construction\n    \n- ReConnect status\n    \n- Permits\n    \n- Make-ready\n    \n- Splicing\n    \n- Turn-up\n    \n- Staffing\n    \n- Other?\n    \n- A-FD check if multiple BEAD Subgrantee Agreements\n",
+  "target": "A-FD check if multiple BEAD Subgrantee Agreements",
+  "expect": [
+   "**Notes**",
+   "- Program Overview",
+   "- BEAD Engineering",
+   "- BEAD Construction",
+   "- ReConnect status",
+   "- Permits",
+   "- Make-ready",
+   "- Splicing",
+   "- Turn-up",
+   "- Staffing",
+   "- Other?",
+   "&nbsp;",
+   "- [ ] @TODO A-FD check if multiple BEAD Subgrantee Agreements //2026-09-29"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "2026-10-07 report: same list, convert FIRST",
+  "md": "**Notes**\n\n- Program Overview\n    \n- BEAD Engineering\n    \n- BEAD Construction\n    \n- ReConnect status\n    \n- Permits\n    \n- Make-ready\n    \n- Splicing\n    \n- Turn-up\n    \n- Staffing\n    \n- Other?\n    \n- A-FD check if multiple BEAD Subgrantee Agreements\n",
+  "target": "Program Overview",
+  "expect": [
+   "**Notes**",
+   "- [ ] @TODO Program Overview //2026-09-29",
+   "&nbsp;",
+   "- BEAD Engineering",
+   "- BEAD Construction",
+   "- ReConnect status",
+   "- Permits",
+   "- Make-ready",
+   "- Splicing",
+   "- Turn-up",
+   "- Staffing",
+   "- Other?",
+   "- A-FD check if multiple BEAD Subgrantee Agreements"
+  ],
+  "checkUndo": true
+ },
+ {
+  "name": "2026-10-07 report: same list, convert #6",
+  "md": "**Notes**\n\n- Program Overview\n    \n- BEAD Engineering\n    \n- BEAD Construction\n    \n- ReConnect status\n    \n- Permits\n    \n- Make-ready\n    \n- Splicing\n    \n- Turn-up\n    \n- Staffing\n    \n- Other?\n    \n- A-FD check if multiple BEAD Subgrantee Agreements\n",
+  "target": "Make-ready",
+  "expect": [
+   "**Notes**",
+   "- Program Overview",
+   "- BEAD Engineering",
+   "- BEAD Construction",
+   "- ReConnect status",
+   "- Permits",
+   "&nbsp;",
+   "- [ ] @TODO Make-ready //2026-09-29",
+   "&nbsp;",
+   "- Splicing",
+   "- Turn-up",
+   "- Staffing",
+   "- Other?",
+   "- A-FD check if multiple BEAD Subgrantee Agreements"
+  ],
+  "checkUndo": true
+ }
+]

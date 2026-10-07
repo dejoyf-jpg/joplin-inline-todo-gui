@@ -21,7 +21,8 @@ const CASES = [
 	{ title: 'E2E bottom of three', body: 'Alpha line\nBravo line\nCharlie line', target: 'Charlie line', gesture: 'triple', want: ['Alpha line', 'Bravo line', `- [ ] @TODO Charlie line //${TOMORROW}`] },
 	{ title: 'E2E isolated line regression', body: 'Alpha line\n\nBravo line\n\nCharlie line', target: 'Bravo line', gesture: 'drag', want: ['Alpha line', `- [ ] @TODO Bravo line //${TOMORROW}`, 'Charlie line'] },
 	{ title: 'E2E special characters', body: 'Alpha line\nPay A&B 5\\*3 now\nCharlie line', target: 'Pay A&B 5*3 now', gesture: 'drag', want: ['Alpha line', `- [ ] @TODO Pay A&B 5\\*3 now //${TOMORROW}`, 'Charlie line'] },
-	{ title: 'E2E bullet list middle', body: '- one\n- two\n- three', target: 'two', gesture: 'drag', want: ['- one', `- [ ] @TODO two //${TOMORROW}`, '- three'] },
+	{ title: 'E2E bullet list middle', body: '- one\n- two\n- three', target: 'two', gesture: 'drag', want: ['- one', '&nbsp;', `- [ ] @TODO two //${TOMORROW}`, '&nbsp;', '- three'] },
+	{ title: 'E2E bullet list last (2026-10-07 report)', body: '- one\n- two\n- three', target: 'three', gesture: 'drag', want: ['- one', '- two', '&nbsp;', `- [ ] @TODO three //${TOMORROW}`] },
 	{ title: 'E2E undo restores', body: 'Alpha line\nBravo line\nCharlie line', target: 'Bravo line', gesture: 'triple', undo: true, want: ['Alpha line', 'Bravo line', 'Charlie line'] },
 ];
 
@@ -34,6 +35,15 @@ const folder = await api('POST', '/folders', { title: 'E2E ' + Date.now() });
 for (const c of CASES) c.note = await api('POST', '/notes', { title: c.title, body: c.body, parent_id: folder.id });
 await sleep(1500);
 
+// A freshly started instance can show the editor toolbar without plugin buttons
+// (see README); toggling the editor twice redraws it with the Convert button.
+await page.getByText(folder.title, { exact: true }).first().click(); await sleep(400);
+await page.getByText(CASES[0].title, { exact: true }).first().click(); await sleep(800);
+for (let k = 0; k < 3 && !(await page.locator('[title^="Convert to Inline TODO"]').count()); k++) {
+	await page.locator('[title="Toggle editors"]').first().click(); await sleep(1500);
+	await page.locator('[title="Toggle editors"]').first().click(); await sleep(1500);
+}
+if (!(await page.locator('[title^="Convert to Inline TODO"]').count())) throw new Error('plugin toolbar button never appeared');
 let fail = 0;
 const results = [];
 for (const c of CASES) {

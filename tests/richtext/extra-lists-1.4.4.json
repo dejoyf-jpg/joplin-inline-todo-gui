@@ -1,0 +1,5 @@
+[
+ {"name":"bullet list preceded by an existing checklist (gap between), convert first bullet","md":"- [ ] finished task\n\n&nbsp;\n\n- alpha\n- beta\n","target":"alpha","expect":["- [ ] finished task","&nbsp;","- [ ] @TODO alpha //2026-09-29","&nbsp;","- beta"]},
+ {"name":"numbered list preceded directly by a checklist, convert first numbered","md":"- [ ] finished task\n\n1. alpha\n2. beta\n","target":"alpha","expect":["- [ ] finished task","- [ ] @TODO alpha //2026-09-29","&nbsp;","2.  beta"]},
+ {"name":"item with a hard line break, convert first line","md":"- one\n- first line  \n  second line\n- three\n","target":"first line","expect":["- one","&nbsp;","- [ ] @TODO first line //2026-09-29","&nbsp;","- second line","- three"]}
+]

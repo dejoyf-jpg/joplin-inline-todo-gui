@@ -84,11 +84,29 @@
 		if (JSON.stringify(got) !== JSON.stringify(expected)) {
 			problems.push('content lines differ\n        expected: ' + JSON.stringify(expected) + '\n        got:      ' + JSON.stringify(got));
 		}
+		// Round trip: what Joplin shows on the NEXT load of this Markdown must
+		// carry exactly the checkboxes the Markdown has. Joplin marks a whole
+		// list as a checklist once one item is one, so a task left inside a
+		// bullet list comes back with every neighbor as a checkbox.
+		const reloaded = document.createElement('div');
+		reloaded.innerHTML = window.mdToHtml(md);
+		const shownBoxes = reloaded.querySelectorAll('ul.joplin-checklist li').length;
+		const savedBoxes = lines(md).filter((l) => /^[\s>]*- \[[ xX]\] /.test(l)).length;
+		if (shownBoxes !== savedBoxes) problems.push('after reload ' + shownBoxes + ' checkbox(es) show for ' + savedBoxes + ' saved: a neighbor became a checkbox');
+		// A bare "&nbsp;" line is the intentional gap between a task and the
+		// list it was split out of; anything else blank is a defect.
+		// A loose list (blank line between items) is saved by Joplin with a
+		// whitespace-only line after every item; those are inherent, so they
+		// are flagged only when the note had none before the conversion.
+		// A gap saved inside a nested list ("    &nbsp;") makes Joplin write the
+		// parent item in its loose form too, so that case is allowed as well.
+		const looseBefore = /^[ \t]+$/m.test(baselineMd) || /^[ \t]+&nbsp;$/m.test(md);
 		const raw = lines(md);
 		raw.forEach((l, k) => {
-			if (/^[\s ]+$/.test(l) || /&nbsp;/.test(l) || /^\s*-\s*\[ \]\s*$/.test(l)) problems.push('stray blank/empty item at line ' + (k + 1) + ': ' + JSON.stringify(l));
+			const blankOnly = /^[\s ]+$/.test(l);
+			if ((blankOnly && !looseBefore) || (/&nbsp;/.test(l) && !/^[ \t]*&nbsp;$/.test(l)) || /^\s*-\s*\[ \]\s*$/.test(l)) problems.push('stray blank/empty item at line ' + (k + 1) + ': ' + JSON.stringify(l));
 			const next = raw[k + 1];
-			if (/  $/.test(l) && (next === undefined || next.trim() === '')) problems.push('dangling hard break (trailing <br>) at line ' + (k + 1) + ': ' + JSON.stringify(l));
+			if (!blankOnly && /  $/.test(l) && (next === undefined || next.trim() === '')) problems.push('dangling hard break (trailing <br>) at line ' + (k + 1) + ': ' + JSON.stringify(l));
 		});
 		if (/<\/?(ul|li|p|br|script|img)\b/i.test(md)) problems.push('raw HTML leaked into markdown');
 		if (c.checkUndo) {

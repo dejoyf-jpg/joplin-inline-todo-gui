@@ -97,6 +97,36 @@ eq(
 	'@TODO call Scott',
 	'blank date and no tags emit only keyword and text',
 );
+eq(
+	pure.buildTodoContent({ token: '@TODO', text: '@TODO call Scott', due: '2026-10-08', tags: [], dateFirst: true }),
+	'@TODO call Scott //2026-10-08',
+	'a line that already starts with the keyword is not doubled (2026-10-07 report: "@TODO @TODO ...")',
+);
+eq(
+	pure.buildTodoContent({ token: '@TODO', text: '@todo call Scott', due: '', tags: [], dateFirst: true }),
+	'@TODO call Scott',
+	'the leading keyword is matched without regard to case',
+);
+eq(
+	pure.buildTodoContent({ token: '@TODO', text: '@TODOS are due', due: '', tags: [], dateFirst: true }),
+	'@TODO @TODOS are due',
+	'a word that merely begins with the keyword is kept',
+);
+eq(
+	pure.buildTodoContent({ token: '@TODO', text: '@TODO call Scott //2026-10-08', due: '2026-10-08', tags: [], dateFirst: true }),
+	'@TODO call Scott //2026-10-08',
+	'converting an already converted line does not repeat the due date',
+);
+eq(
+	pure.buildTodoContent({ token: '@TODO', text: 'call Scott //2026-10-08', due: '', tags: ['BOB'], dateFirst: true }),
+	'@TODO call Scott //2026-10-08 +BOB',
+	'a due date already in the line stands in when the dialog date is blank',
+);
+eq(
+	pure.buildTodoContent({ token: '@TODO', text: 'call Scott //2026-10-08', due: '2026-10-09', tags: [], dateFirst: true }),
+	'@TODO call Scott //2026-10-09',
+	'the dialog date replaces a due date already in the line',
+);
 
 // ---------- End-to-end: every emittable line matches calebjohn's scanner ----------
 // The actual regex from plugin.calebjohn.todo v2.1.1.

@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.4.4
+
+### Fixed
+
+- Rich Text editor: converting one item of a bullet or numbered list no longer
+  turns the other items into checkboxes after the note reloads. 1.4.3 split the
+  task into its own checklist, but Joplin saved the two lists as one Markdown
+  list and, on the next load, rendered every item of it as a checkbox (measured
+  in Joplin 3.7.21). The task is now separated from the rest of the list by an
+  empty paragraph on each side it touches, which Joplin saves as `&nbsp;` and
+  shows as one blank line. The other items stay bullets through every save and
+  reload.
+- Lists whose items have a blank line between them (Joplin's "loose" form) are
+  handled the same way; before, the task ended up nested under an empty bullet
+  there (`- - [ ] ...`), where the Inline TODO scanner could not see it.
+- A line that already starts with the keyword (for example after converting it
+  twice) no longer comes out as `@TODO @TODO ...`, and a due date already in the
+  line is not repeated beside the new one.
+
+### Known limitation
+
+- Converting an item that has its own sub-items also turns those sub-items
+  into checkboxes when the note is saved. That is how Joplin stores a checkbox
+  item's children, not something the plugin controls. (Converting one of the
+  sub-items themselves is fine: its sibling sub-items stay bullets.)
+
 ## 1.4.3
 
 ### Fixed

@@ -5,7 +5,9 @@
   "target": "two",
   "expect": [
    "- one",
+   "&nbsp;",
    "- [ ] @TODO two //2026-09-29",
+   "&nbsp;",
    "- three"
   ]
  },
@@ -15,7 +17,9 @@
   "target": "two",
   "expect": [
    "1.  one",
+   "&nbsp;",
    "- [ ] @TODO two //2026-09-29",
+   "&nbsp;",
    "3.  three"
   ]
  },
@@ -36,6 +40,7 @@
   "expect": [
    "- [ ] @TODO parent //2026-09-29",
    "    - [ ] child",
+   "&nbsp;",
    "- sibling"
   ]
  },
@@ -121,9 +126,33 @@
   "target": "six",
   "expect": [
    "5.  five",
+   "&nbsp;",
    "- [ ] @TODO six //2026-09-29",
+   "&nbsp;",
    "7.  seven",
    "8.  eight"
+  ]
+ },
+ {
+  "name": "list: last bullet of 3 (2026-10-07 report: neighbors stayed bullets after reload)",
+  "md": "- one\n- two\n- three\n",
+  "target": "three",
+  "expect": [
+   "- one",
+   "- two",
+   "&nbsp;",
+   "- [ ] @TODO three //2026-09-29"
+  ]
+ },
+ {
+  "name": "list: first bullet of 3",
+  "md": "- one\n- two\n- three\n",
+  "target": "one",
+  "expect": [
+   "- [ ] @TODO one //2026-09-29",
+   "&nbsp;",
+   "- two",
+   "- three"
   ]
  }
 ]

@@ -11,6 +11,11 @@
 // The name starts with "mceInsert" on purpose: Joplin saves the note after any
 // command with that prefix.
 //
+// The task becomes its own one-item checklist, and an empty paragraph goes
+// between it and any bullet or numbered list it touches. See separateFromLists
+// in convertLine: without that gap the saved Markdown is one list and Joplin
+// renders every item of it as a checkbox on the next load.
+//
 // The same file is also loaded into the note viewer, where there is no editor;
 // it then does nothing.
 (function () {
@@ -70,6 +75,11 @@
 			}
 		}
 		if (endBlock !== block) return false;
+		// A list with blank lines between its items is "loose": Joplin renders
+		// each item as <li><p>text</p></li>. The item, not its paragraph, is the
+		// block to split, or the checklist lands inside the item and Joplin
+		// saves "- - [ ] ..." (found 2026-10-07 by the regression run).
+		if (block.nodeName === 'P' && block.parentNode && block.parentNode.nodeName === 'LI') block = block.parentNode;
 		var tag = block.nodeName;
 		if (block === body || !/^(P|DIV|LI)$/.test(tag)) return false;
 
@@ -102,32 +112,68 @@
 				lineNodes.push(n);
 				if (n === last) break;
 			}
+			// Marks where the line sat, so what was before it and after it
+			// can be told apart once the line has moved into the new item.
+			var marker = doc.createComment('inline-todo-line');
+			block.insertBefore(marker, first);
 			for (var i = 0; i < lineNodes.length; i++) li.appendChild(lineNodes[i]);
 
+			function isPlainList(n) {
+				return isList(n) && !(n.classList && n.classList.contains('joplin-checklist'));
+			}
+			// An empty paragraph, which Joplin saves as "&nbsp;". It goes
+			// between the checklist and any bullet or numbered list it touches.
+			// Without it Joplin saves the two as ONE Markdown list (same "-"
+			// marker, only a blank line between), and on the next load its
+			// renderer marks the whole list as a checklist, so every neighbor
+			// came back as a checkbox (measured in Joplin 3.7.21, 2026-10-07).
+			// It shows as one blank line. The same holds for a list nested
+			// inside an item: there the gap is saved indented and keeps the
+			// sibling sub-items as bullets (measured the same day).
+			function gap() {
+				var p = doc.createElement('p');
+				var br = doc.createElement('br');
+				br.setAttribute('data-mce-bogus', '1');
+				p.appendChild(br);
+				return p;
+			}
+			function separateFromLists(ul) {
+				var parent = ul.parentNode;
+				if (!parent) return;
+				if (isPlainList(ul.previousSibling)) parent.insertBefore(gap(), ul);
+				if (isPlainList(ul.nextSibling)) parent.insertBefore(gap(), ul.nextSibling);
+			}
+
+			var ul;
 			if (tag === 'LI') {
 				var list = block.parentNode;
 				var inChecklist = !!(list.classList && list.classList.contains('joplin-checklist'));
+				// What is left of the item: lines before the converted line go
+				// to one item, lines after it to another, and a nested sublist
+				// stays under the converted item.
 				var beforeLi = block.cloneNode(false);
 				var afterLi = block.cloneNode(false);
-				if (prevBr) {
-					while (block.firstChild !== prevBr) beforeLi.appendChild(block.firstChild);
-					block.removeChild(prevBr);
+				var past = false;
+				for (var c = block.firstChild; c; ) {
+					var nxt = c.nextSibling;
+					if (c === marker || c === prevBr || c === nextBr) {
+						// The marker and the line's own breaks go away.
+						if (c === marker) past = true;
+						block.removeChild(c);
+					} else if (!past) beforeLi.appendChild(c);
+					else if (isList(c)) li.appendChild(c);
+					else afterLi.appendChild(c);
+					c = nxt;
 				}
-				if (nextBr) {
-					while (nextBr.nextSibling) afterLi.appendChild(nextBr.nextSibling);
-					block.removeChild(nextBr);
-				}
-				// A nested sublist stays under the converted item.
-				while (block.firstChild) {
-					var rest = block.firstChild;
-					if (isList(rest)) li.appendChild(rest); else afterLi.appendChild(rest);
-				}
+				trimEdges(beforeLi);
+				trimEdges(afterLi);
 				if (inChecklist) {
 					// Already a checkbox line: keep it one, unchecked, in place.
 					if (beforeLi.firstChild) list.insertBefore(beforeLi, block);
 					list.insertBefore(li, block);
 					if (afterLi.firstChild) list.insertBefore(afterLi, block);
 					list.removeChild(block);
+					ul = list;
 				} else {
 					// Split the list: items before, a checklist holding this
 					// item, items after. A numbered list keeps its numbering.
@@ -141,7 +187,7 @@
 					if (afterLi.firstChild) tail.insertBefore(afterLi, tail.firstChild);
 					if (beforeLi.firstChild) list.insertBefore(beforeLi, block);
 					list.removeChild(block);
-					var ul = doc.createElement('ul');
+					ul = doc.createElement('ul');
 					ul.className = 'joplin-checklist';
 					ul.appendChild(li);
 					dom.insertAfter(ul, list);
@@ -153,29 +199,33 @@
 						dom.insertAfter(tail, ul);
 					}
 					if (!list.firstChild) list.parentNode.removeChild(list);
+					separateFromLists(ul);
 				}
 			} else {
 				// Paragraph: [lines before] [checklist item] [lines after].
 				var before = block.cloneNode(false);
 				var after = block.cloneNode(false);
-				if (prevBr) {
-					while (block.firstChild !== prevBr) before.appendChild(block.firstChild);
-					block.removeChild(prevBr);
-				}
-				if (nextBr) {
-					while (nextBr.nextSibling) after.appendChild(nextBr.nextSibling);
-					block.removeChild(nextBr);
+				var past2 = false;
+				for (var c2 = block.firstChild; c2; ) {
+					var nxt2 = c2.nextSibling;
+					if (c2 === marker || c2 === prevBr || c2 === nextBr) {
+						if (c2 === marker) past2 = true;
+						block.removeChild(c2);
+					} else if (!past2) before.appendChild(c2);
+					else after.appendChild(c2);
+					c2 = nxt2;
 				}
 				var parent = block.parentNode;
-				var list2 = doc.createElement('ul');
-				list2.className = 'joplin-checklist';
-				list2.appendChild(li);
+				ul = doc.createElement('ul');
+				ul.className = 'joplin-checklist';
+				ul.appendChild(li);
 				parent.insertBefore(before, block);
-				parent.insertBefore(list2, block);
+				parent.insertBefore(ul, block);
 				parent.insertBefore(after, block);
 				parent.removeChild(block);
 				trimEdges(before);
 				trimEdges(after);
+				separateFromLists(ul);
 			}
 			trimEdges(li);
 

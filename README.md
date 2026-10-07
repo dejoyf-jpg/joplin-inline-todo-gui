@@ -30,6 +30,14 @@ On **Convert**, the line becomes a real checkbox:
 
 This works in **both** the Markdown editor and the Rich Text editor.
 
+In the Rich Text editor, a task converted inside a bullet or numbered list is
+set off from the rest of the list by one blank line on each side it touches.
+Joplin needs that line: without it, it saves the task and its neighbors as one
+Markdown list and shows every item as a checkbox the next time the note loads.
+Converting an item that has sub-items of its own also turns those sub-items
+into checkboxes when the note is saved. That is how Joplin stores a checkbox
+item's children.
+
 The calebjohn plugin then picks it up under **Tools > Create TODO summary note**.
 
 ## Mobile (Android)
